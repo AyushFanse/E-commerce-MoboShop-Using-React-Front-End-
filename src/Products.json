@@ -1,0 +1,191 @@
+[
+    {
+        "productName":"Realme x50 pro",
+        "image":"img/Realme X50 Pro 5g.png",
+        "price": "41,999",
+        "rom":"128",
+        "ram":"8",
+        "processor":"Qualcomm Snapdragon 865",
+        "battry": "5000"
+    },
+    {
+        "productName":"Redmi Note10 Pro Max",
+        "image":"img/Redmi Note 10 Pro Max.png",
+        "price": "21,990",
+        "rom":"128",
+        "ram":"6",
+        "processor":"Qualcomm Snapdragon 732G",
+        "battry": "5000"
+    },
+    {
+        "productName":"OnePlus 9 Pro",
+        "image":"img/OnePlus 9 Pro 5G.png",
+        "price": "60,999",
+        "rom":"128",
+        "ram":"8",
+        "processor":"Qualcomm Snapdragon 888",
+        "battry": "4500"
+    },
+    {
+        "productName":"Realme 8i",
+        "image":"img/Realme 8i 5G.png",
+        "price": "14,999",
+        "rom":"128",
+        "ram":"6",
+        "processor":"MediaTek Helio G96",
+        "battry": "5000"
+    },
+    {
+        "productName":"POCO M3 Pro",
+        "image":"img/POCO M3 Pro 5G.png",
+        "price": "16,499",
+        "rom":"128",
+        "ram":"6",
+        "processor":"MediaTek Dimensity 700",
+        "battry": "5000"
+    },
+    {
+        "productName":"Motorola G40 Fusion",
+        "image":"img/Motorola G40 Fusion.png",
+        "price": "16,599",
+        "rom":"128",
+        "ram":"6",
+        "processor":"Qualcomm Snapdragon 732G",
+        "battry": "6000"
+    },
+    {
+        "productName":"ROG Phone 5",
+        "image":"img/Asus ROG Phone 5 Ultimate.png",
+        "price":" 49,999",
+        "rom":"128",
+        "ram":"8",
+        "processor":"Qualcomm Snapdragon 888 (SM8350)",
+        "battry": "6000"
+    },
+    {
+        "productName":"iPhone 13 Pro Max",
+        "image":"img/Apple iPhone 13 Pro Max.png",
+        "price": "1,39,900",
+        "rom":"256",
+        "ram":"6",
+        "processor":"A15 Bionic Chip",
+        "battry": "5000"
+    },
+    {
+        "productName":"ROG Phone 3",
+        "image":"img/Asus ROG Phone 3.png",
+        "price": "34,999",
+        "rom":"128",
+        "ram":"8",
+        "processor":"Qualcomm Snapdragon 865+ (SM8250)",
+        "battry": "6000"
+    },
+    {
+        "productName":"Realme GT",
+        "image":"img/realme GT Master Edition.png",
+        "price": "22,999",
+        "rom":"128",
+        "ram":"8",
+        "processor":"Qualcomm Snapdragon 778G",
+        "battry": "4300"
+    },
+    {
+        "productName":"Nokia 9",
+        "image":"img/Nokia 9.png",
+        "price": "58,999",
+        "rom":"128",
+        "ram":"6",
+        "processor":"Qualcomm SDM845 Snapdragon 845",
+        "battry": "3320"
+    },
+    {
+        "productName":"Google Pixel 5",
+        "image":"img/Google Pixel 5 5G.png",
+        "price": "64,298",
+        "rom":"128",
+        "ram":"8",
+        "processor":"Qualcomm Snapdragon 765G",
+        "battry": "4080"
+    },
+    {
+        "productName":"Meizu 18 Pro",
+        "image":"img/Meizu 18 pro.png",
+        "price": "65,999",
+        "rom":"256",
+        "ram":"8",
+        "processor":"Snapdragon 888 5G chipset",
+        "battry": "5000"
+    },
+    {
+        "productName":"Oppo Reno 6 Pro",
+        "image":"img/Oppo Reno6 pro 5G.png",
+        "price":"42,990",
+        "rom":"256",
+        "ram":"12",
+        "processor":"MediaTek MT6893 Dimensity 1200",
+        "battry": "4500"
+    },
+    {
+        "productName":"ROG Phone 5s Pro",
+        "image":"img/Asus ROG Phone 5s pro.png",
+        "price": "41,999",
+        "rom":"512",
+        "ram":"18",
+        "processor":"Qualcomm Snapdragon 888+",
+        "battry": "6000"
+    },
+    {
+        "productName":"iQOO 7",
+        "image":"img/iQOO 7 5G.jpg",
+        "price": "29,990",
+        "rom":"128",
+        "ram":"8",
+        "processor":"Qualcomm Snapdragon 870",
+        "battry": "4400"
+    },
+    {
+        "productName":"Nokia G10",
+        "image":"img/Nokia G10.jpg",
+        "price": "12,149",
+        "rom":"64",
+        "ram":"4",
+        "processor":"Mediatek G25 8x A53 2.0GHz",
+        "battry": "5050"
+    },
+    {
+        "productName":"Vivo V21 5G",
+        "image":"img/VIVO V21 5G.jpg",
+        "price": "29,990",
+        "rom":"128",
+        "ram":"8",
+        "processor":"MediaTek Dimensity 800U",
+        "battry": "4000"
+    },
+    {
+        "productName":"Vivo V21 Pro",
+        "image":"img/Vivo V21 Pro 5G.jpg",
+        "price": "32,990",
+        "rom":"128",
+        "ram":"8",
+        "processor":"MediaTek Dimensity 800U",
+        "battry": "4300"
+    },
+    {
+        "productName":"Samsung Galaxy A72",
+        "image":"img/Samsung galaxy A72.jpg",
+        "price": "34,999",
+        "rom":"128",
+        "ram":"8",
+        "processor":"Qualcomm Snapdragon 720G",
+        "battry":"5000"
+    },
+    {
+        "productName":"Realme GT Neo 2",
+        "image":"img/Realme GT Neo 2 5G.jpg",
+        "price": "31,999",
+        "rom":"128",
+        "ram":"8",
+        "processor":"Qualcomm Snapdragon 870",
+        "battry": "5000"
+    }
+]

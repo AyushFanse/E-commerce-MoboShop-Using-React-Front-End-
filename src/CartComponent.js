@@ -244,7 +244,6 @@ return (
                 </Grid>
             ))}
 
-            // <div class="z-base ps-absolute t0 r0 b0 l0" id="particles"><canvas class="particles-js-canvas-el" width="599" height="421" style="width: 100%; height: 100%;"></canvas></div>
         </Grid>
     </Box>
     );

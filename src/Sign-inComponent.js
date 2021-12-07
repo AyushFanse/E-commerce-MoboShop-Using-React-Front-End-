@@ -74,7 +74,7 @@ return (
                                 label="First-Name"
                                 size="small"
                                 variant="standard"
-                                autofocus="autofocus" aria-required="true"
+                                aria-required="true"
                                 value={props.fname}
                                 onChange={(e) => {setFname(e.currentTarget)}}
                                 />
@@ -159,8 +159,8 @@ return (
                     </form>
                 </Grid>
             </Box>    
-                <p class="privacy tos" style={{fontSize: "12px", textAlign: "center" }}>
-                        Signing up signifies that you have read and agree to the <a href="#">Terms of Service</a> <span class="japan-only" style={{display:"none"}}>, the <a href="#">Salesforce Japan Privacy Statement</a></span> and our <a href="#">Privacy Policy</a>.<br/><a href="#" class="optanon-toggle-display" rel="nofollow">Cookie Preferences</a>.
+                <p style={{fontSize: "12px", textAlign: "center" }}>
+                        Signing up signifies that you have read and agree to the <a href="#">Terms of Service</a> <span style={{display:"none"}}>, the <a href="#">Salesforce Japan Privacy Statement</a></span> and our <a href="#">Privacy Policy</a>.<br/><a href="#" rel="nofollow">Cookie Preferences</a>.
                 </p>
         </Box>            
     </>

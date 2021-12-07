@@ -26,7 +26,7 @@ const handleSubmit = async (e) => {
 
 e.preventDefault();
     try{
-        var response = await axios.post('http://localhost:3001/register/login', {
+        var response = await axios.post('https://e-commerce-mobo-website.herokuapp.com/register/login', {
             password: password.value,
             email: email.value
         })
@@ -93,7 +93,7 @@ e.preventDefault();
                                 </Button>
                             </Grid>
                             <Grid sx={{textAlign: 'center', mb:2, cursor: 'pointer'}}>
-                                <p>Don't have account ? <Link onClick={() =>{props.history.push('/signin')}} variant="body2">Sign-In</Link></p>
+                                <p>Don&apos;t have account ? <Link onClick={() =>{props.history.push('/signin')}} variant="body2">Sign-In</Link></p>
                             </Grid>
                     </form>
                     </Grid>

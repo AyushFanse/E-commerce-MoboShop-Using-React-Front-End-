@@ -27,7 +27,7 @@ if(decodedToken==null){
         if(decodedToken.exp*1000<=Date.now()){
         props.history.push('/');
         }else{
-        var response = await axios.get('http://localhost:3001/product/getproduct',
+        var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/product/getproduct',
         {
             headers:{ token:localToken }
         })
@@ -54,7 +54,7 @@ const updateProduct = (async (id, userQuanttity)=>{
         if(decodedToken.exp*1000<=Date.now()){
         props.history.push('/');
         }else{
-        var response = await axios.patch(`http://localhost:3001/product/updateproduct/${id}`,
+        var response = await axios.patch(`https://e-commerce-mobo-website.herokuapp.com/product/updateproduct/${id}`,
         {
             userQuanttity: userQuanttity
         },
@@ -232,7 +232,7 @@ return (
                             <CardContent>
                                 <Grid sx={{textAlign: 'center'}}>
                                     <Grid>
-                                        <DeleteForeverTwoToneIcon color="error" onClick={()=>{updateProduct(product._id, product.userQuanttity=0)}} sx={{verticalAlign: 'middle',ml:-3}}/>
+                                        <DeleteForeverTwoToneIcon color="error" onClick={()=>{updateProduct(product._id, product.userQuanttity=0)}} sx={{verticalAlign: 'middle',ml:-3, cursor: 'pointer'}}/>
                                         <Button sx={{ minWidth:160, ml:3, border:1.7, borderRadius:'10px'}} variant="outlined">
                                             <ShoppingCartIcon />
                                             buy
@@ -243,8 +243,6 @@ return (
                     </Card>
                 </Grid>
             ))}
-
-            // <div class="z-base ps-absolute t0 r0 b0 l0" id="particles"><canvas class="particles-js-canvas-el" width="599" height="421" style="width: 100%; height: 100%;"></canvas></div>
         </Grid>
     </Box>
     );

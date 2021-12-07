@@ -68,7 +68,7 @@ useEffect(async ()=>{
     if(decodedToken.exp*1000<=Date.now()){
     props.history.push('/');
   }else{
-  var response = await axios.get('http://localhost:3001/product/getproduct',
+  var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/product/getproduct',
   {
     headers: {
       token:localToken
@@ -97,7 +97,7 @@ const updateProduct = async (id, userQuanttity)=>{
   if(decodedToken.exp*1000<=Date.now()){
     props.history.push('/');
   }else{
-    var response = await axios.patch(`http://localhost:3001/product/updateproduct/${id}`,
+    var response = await axios.patch(`https://e-commerce-mobo-website.herokuapp.com/product/updateproduct/${id}`,
     {
       userQuanttity: userQuanttity
     },

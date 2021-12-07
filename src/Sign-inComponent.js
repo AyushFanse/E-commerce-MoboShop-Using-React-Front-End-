@@ -4,8 +4,6 @@ import {IconButton,Button,Grid,TextField,FormControl,InputLabel,Input,AppBar,Lin
 import Visibility from '@mui/icons-material/Visibility';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-
 
 
 const LoginComponent = (props) => {
@@ -33,7 +31,7 @@ const handleSubmit = async (e) => {
 
 e.preventDefault();
     try{
-        await axios.post('http://localhost:3001/register/registerUser', {
+        await axios.post('https://e-commerce-mobo-website.herokuapp.com/register/registerUser', {
             username:username.value,
             fname:fname.value,
             lname:lname.value,
@@ -52,16 +50,7 @@ e.preventDefault();
     }
 }
 
-var captchaCallback = ()=>{
-    ('textarea#g-recaptcha-response').parents('form').trigger('inputsChanged')};
-var renderCaptcha =()=>{
 
-return ('g-recaptcha', {
-    'sitekey' : '6LctQg4UAAAAAFWvn4zhyn7XymfcTN2sl5vZ9JTb',
-    'callback': captchaCallback
-}),
-document.querySelector('#g-recaptcha iframe').setAttribute('title', "reCAPTCHA to prove that you're not a robot.")
-};
 
 return (
     <>
@@ -169,17 +158,9 @@ return (
                         </Grid>
                     </form>
                 </Grid>
-                            // <div class="input-group captcha">
-                            // <script type="text/javascript">
-                            //             {captchaCallback}
-                            //             {renderCaptcha}
-                            // </script>
-                            // <div id="g-recaptcha"><div><div><iframe title="reCAPTCHA to prove that you're not a robot." src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LctQg4UAAAAAFWvn4zhyn7XymfcTN2sl5vZ9JTb&amp;co=aHR0cHM6Ly9zaWdudXAuaGVyb2t1LmNvbTo0NDM.&amp;hl=en&amp;v=_7Co1fh8iT2hcjvquYJ_3zSP&amp;size=normal&amp;cb=tckfahiqsq6v" role="presentation" name="a-lqi69yxdn7o8" style={{ width:"304px", height:"78px" ,frameborder:"0", scrolling:"no" ,sandbox:"allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"}}></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style={{width: "250px", height: "40px", border: "1px solid rgb(193, 193, 193)", margin: "10px 25px", padding:" 0px", resize: "none", display: "none"}}></textarea></div><iframe style={{display: "none"}}></iframe></div>
-                            // <script src="https://www.google.com/recaptcha/api.js?onload=renderCaptcha&amp;render=explicit&amp;hl=en" async="" defer=""></script>
-                            // </div>
             </Box>    
                 <p class="privacy tos" style={{fontSize: "12px", textAlign: "center" }}>
-                        Signing up signifies that you have read and agree to the <a target="_blank" href="https://www.salesforce.com/company/legal/sfdc-website-terms-of-service/">Terms of Service</a> <span class="japan-only" style={{display:"none"}}>, the <a target="_blank" href="http://www.salesforce.com/jp/company/personalinfo.jsp">Salesforce Japan Privacy Statement</a></span> and our <a target="_blank" href="https://www.salesforce.com/company/privacy/">Privacy Policy</a>.<br/><a href="#" class="optanon-toggle-display" rel="nofollow">Cookie Preferences</a>.
+                        Signing up signifies that you have read and agree to the <a href="#">Terms of Service</a> <span class="japan-only" style={{display:"none"}}>, the <a href="#">Salesforce Japan Privacy Statement</a></span> and our <a href="#">Privacy Policy</a>.<br/><a href="#" class="optanon-toggle-display" rel="nofollow">Cookie Preferences</a>.
                 </p>
         </Box>            
     </>

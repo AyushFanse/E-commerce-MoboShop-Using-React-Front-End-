@@ -25,7 +25,7 @@ if(decodedToken==null){
         if(decodedToken.exp*1000<=Date.now()){
         props.history.push('/');
         }else{
-        var response = await axios.get('http://localhost:3001/users/getuser',
+        var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/users/getuser',
         {
             headers:{ token:localToken }
         })
@@ -57,7 +57,7 @@ const Filter = (filterData)=>{
 //         if(decodedToken.exp*1000<=Date.now()){
 //         props.history.push('/');
 //         }else{
-//         var response = await axios.patch(`http://localhost:3001/product/updateproduct/${id}`,
+//         var response = await axios.patch(`https://e-commerce-mobo-website.herokuapp.com/product/updateproduct/${id}`,
 //         {
 //             userQuanttity: userQuanttity
 //         },
@@ -80,7 +80,7 @@ const DeleteAccount = (async (id)=>{
         if(decodedToken.exp*1000<=Date.now()){
         props.history.push('/');
         }else{
-        await axios.delete(`http://localhost:3001/users/deleteuser/${id}`)
+        await axios.delete(`https://e-commerce-mobo-website.herokuapp.com/users/deleteuser/${id}`)
         localStorage.removeItem('token');
         props.history.push('/');
         alert('Your Account has been deleted Successfully');

@@ -24,7 +24,7 @@ if(decodedToken==null){
         if(decodedToken.exp*1000<=Date.now()){
         props.history.push('/');
         }else{
-        var response = await axios.get('http://localhost:3001/users/getuser',
+        var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/users/getuser',
         {
             headers:{ token:localToken }
         })

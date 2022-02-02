@@ -1,12 +1,15 @@
-import React,{useEffect, useState} from 'react';
-import {AppBar, Badge,Card, MenuItem, Menu, styled, alpha, ImageListItem, ImageList, InputBase, Grid, Box, Toolbar, Typography, Button, IconButton,  CardActions} from '@mui/material';
+import React,{ useEffect, useState } from 'react';
+import { AppBar, Badge,Card, MenuItem, Menu, styled, alpha, ImageListItem, ImageList, InputBase, Grid, Box, Toolbar, Typography, Button, IconButton,  CardActions } from '@mui/material';
 import SearchIcon  from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCartTwoTone';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('div')(({ theme }) => ({  
+
+
+  
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -57,18 +60,20 @@ const ProductComponent = (props)=>{
 
 let[add, setAdd]= useState('');
 let [anchorEl, setAnchorEl] =useState(null);
+const [searches, setSearch] = useState('');
 let [products, setProduct] = useState([]);
 let [cart,setCart] = useState(0);
 const localToken = localStorage.getItem('token');
 var decodedToken = jwt.decode(localToken);
+const DataBase = 'https://e-commerce-mobo-website.herokuapp.com/';
 
+useEffect( () =>{ Fatch() })
 
-useEffect(async ()=>{
-
-    if(decodedToken.exp*1000<=Date.now()){
+const Fatch = (async()=>{
+  if(decodedToken.exp*1000<=Date.now()){
     props.history.push('/');
   }else{
-  var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/product/getproduct',
+  var response = await axios.get(`${DataBase}product/getproduct`,
   {
     headers: {
       token:localToken
@@ -77,7 +82,7 @@ useEffect(async ()=>{
   setAdd('ADD TO CART');
   setProduct(response.data);
   updateCart(response.data);
-}},[])
+}})
 
 
 const handleMenu = (event) => {
@@ -90,14 +95,14 @@ const handleClose = () => {
 
 const updateProduct = async (id, userQuanttity)=>{
   
-  if(decodedToken==null){
+  if(decodedToken===null){
     props.history.push('/');
     alert("Session Timeout Please Login Again...");
   }else{
   if(decodedToken.exp*1000<=Date.now()){
     props.history.push('/');
   }else{
-    var response = await axios.patch(`https://e-commerce-mobo-website.herokuapp.com/product/updateproduct/${id}`,
+    var response = await axios.patch(`${DataBase}product/updateproduct/${id}`,
     {
       userQuanttity: userQuanttity
     },
@@ -150,6 +155,7 @@ const logout = ()=>{
                 <StyledInputBase
                   placeholder="Search…"
                   inputProps={{ 'aria-label': 'search' }}
+                  onChange={(e)=>{setSearch(e.currentTarget.value.toLowerCase())}}
                 />
               </Search>
             &nbsp;
@@ -181,7 +187,7 @@ const logout = ()=>{
                         }}
                         open={Boolean(anchorEl)}
                         onClick={handleClose}>
-                    <Typography sx={{  display: 'flex',color:'primary', justifyContent: 'center', m:-1}}><h3>Hi {decodedToken.user.fname} !</h3></Typography>
+                    <Typography sx={{  display: 'flex',color:'primary', justifyContent: 'center', m:-1}}><h3>Hi {decodedToken.user.first_name} !</h3></Typography>
                     <MenuItem sx={{ display: 'flex', justifyContent: 'center', width:'170px'}} onClick ={profile}>profile</MenuItem>
                     <MenuItem sx={{ display: 'flex', justifyContent: 'center'}} onClick ={settings}>Settings</MenuItem>
                     <MenuItem sx={{ display: 'flex', justifyContent: 'center'}}  onClick={logout}>Logout</MenuItem>
@@ -191,7 +197,12 @@ const logout = ()=>{
           </Toolbar>
         </AppBar>
         <Grid container spacing={1} sx={{mt:2}}>
-          {products.map(product => (
+          {products.filter((search)=>{
+            if(searches===""){
+              return search
+            }else if(search.image.toLowerCase().includes(searches) || search.processor.toLowerCase().includes(searches)){    
+              return search
+            }}).map(product => (
             <CardDataInCenter key={product._id}>
               <Grid item key={product._id}>
                   <Typography variant="h7" component="div" sx={{ display: 'flex', justifyContent: 'center', mt:'15px'}}>
@@ -201,7 +212,8 @@ const logout = ()=>{
                     <Typography>
                     <ImageList sx={{display: 'flex', justifyContent: 'center',m:2}}>
                             <ImageListItem key={product.image}>
-                            <img src={`${product.image}?w=248&fit=crop&auto=format`}
+                            <img src={`img/${product.image}?w=248&fit=crop&auto=format`}
+                                alt = {`${product.image}`}
                                 loading="lazy"
                                 style={{maxWidth: '100%', minHeight: '145px', maxHeight: '180px'}}/>
                             </ImageListItem>

@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import {IconButton,Grid,MenuItem,Menu,Typography,AppBar,Toolbar,Box} from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import axios from 'axios';
+// import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
 
@@ -11,38 +11,38 @@ const SettingsComponent = (props)=>{
 
 
 const [anchorEl, setAnchorEl] =useState(null);
-const [user, setUser] = useState([]);
+// const [user, setUser] = useState([]);
 const localToken = localStorage.getItem('token');
 var decodedToken = jwt.decode(localToken);
 
-useEffect(async ()=>{
+// useEffect(async ()=>{
     
-if(decodedToken==null){
-    props.history.push('/');
-    alert("Session Timeout Please Login Again...");
-}else{
-        if(decodedToken.exp*1000<=Date.now()){
-        props.history.push('/');
-        }else{
-        var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/users/getuser',
-        {
-            headers:{ token:localToken }
-        })
+// if(decodedToken==null){
+//     props.history.push('/');
+//     alert("Session Timeout Please Login Again...");
+// }else{
+//         if(decodedToken.exp*1000<=Date.now()){
+//         props.history.push('/');
+//         }else{
+//         var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/users/getuser',
+//         {
+//             headers:{ token:localToken }
+//         })
 
-        let createData = response.data;
-        Filter(createData);
-    }
-}},[])
+//         let createData = response.data;
+//         Filter(createData);
+//     }
+// }})
 
-const Filter = (filterData)=>{
+// const Filter = (filterData)=>{
     
-    let loginUser = decodedToken.user;
-    let createdData = '';
-    createdData = filterData.filter(function(ele){
-        return ele.username===loginUser.username && ele.phone===loginUser.phone && ele.fname===loginUser.fname && ele.lname===loginUser.lname;
-    })
-    setUser(createdData);
-}
+//     let loginUser = decodedToken.user;
+//     let createdData = '';
+//     createdData = filterData.filter(function(ele){
+//         return ele.username===loginUser.username && ele.phone===loginUser.phone && ele.fname===loginUser.fname && ele.lname===loginUser.lname;
+//     })
+//     setUser(createdData);
+// }
 
 
 const profile = ()=>{

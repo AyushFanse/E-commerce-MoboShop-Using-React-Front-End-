@@ -17,25 +17,28 @@ const [anchorEl, setAnchorEl] =useState(null);
 var [products, setProduct] = useState([]);
 const localToken = localStorage.getItem('token');
 var decodedToken = jwt.decode(localToken);
+const DataBase = 'https://e-commerce-mobo-website.herokuapp.com/';
 
-useEffect(async ()=>{
-    
-if(decodedToken==null){
-    props.history.push('/');
-    alert("Session Timeout Please Login Again...");
-}else{
-        if(decodedToken.exp*1000<=Date.now()){
+
+useEffect( () =>{ Fatch() })
+
+const Fatch = (async()=>{
+    if(decodedToken==null){
         props.history.push('/');
-        }else{
-        var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/product/getproduct',
-        {
-            headers:{ token:localToken }
-        })
-
-        let createData = response.data;
-        Filter(createData);
+        alert("Session Timeout Please Login Again...");
+    }else{
+            if(decodedToken.exp*1000<=Date.now()){
+            props.history.push('/');
+            }else{
+            var response = await axios.get(`${DataBase}product/getproduct`,
+            {
+                headers:{ token:localToken }
+            })
+    
+            let createData = response.data;
+            Filter(createData);
         }
-    }},[])
+}})
 
 const Filter = (filterData)=>{
     let createdData = [];
@@ -54,7 +57,7 @@ const updateProduct = (async (id, userQuanttity)=>{
         if(decodedToken.exp*1000<=Date.now()){
         props.history.push('/');
         }else{
-        var response = await axios.patch(`https://e-commerce-mobo-website.herokuapp.com/product/updateproduct/${id}`,
+        var response = await axios.patch(`${DataBase}product/updateproduct/${id}`,
         {
             userQuanttity: userQuanttity
         },
@@ -94,7 +97,7 @@ const logout = ()=>{
     alert('You have been logged out');
     }
 
-// setProduct(products);
+
 return (
     <Box sx={{ flexGrow: 1}}>
         <AppBar position="static">
@@ -133,7 +136,7 @@ return (
                         open={Boolean(anchorEl)}
                         onClick={handleClose}
                     >
-                        <Typography sx={{  display: 'flex', justifyContent: 'center', m:-1}}><h3>Hi {decodedToken.user.fname} !</h3></Typography>
+                        <Typography sx={{  display: 'flex', justifyContent: 'center', m:-1}}><h3>Hi {decodedToken.user.first_name} !</h3></Typography>
                         <MenuItem sx={{width:'170px', display: 'flex', justifyContent: 'center' }} onClick ={home}>Home</MenuItem>
                         <MenuItem sx={{display: 'flex', justifyContent: 'center'}} onClick ={profile}>profile</MenuItem>
                         <MenuItem sx={{ display: 'flex', justifyContent: 'center'}} onClick ={settings}>Settings</MenuItem>
@@ -152,7 +155,8 @@ return (
                             <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
                                 <ImageList sx={{ maxWidth: '180px', minWidth: '100px', maxHeight: '280px', height:'100%', display: 'flex', mt:'-5px' , mb:'-2px'}}>
                                     <ImageListItem key={product.image}>
-                                        <img src={`${product.image}?w=248&fit=crop&auto=format`}
+                                        <img src={`img/${product.image}?w=248&fit=crop&auto=format`}
+                                            alt = {`${product.image}`}
                                             loading="lazy"
                                             style={{maxWidth: '100%', minHeight: '160px', maxHeight: '180px'}}/>
                                     </ImageListItem>
@@ -232,7 +236,7 @@ return (
                             <CardContent>
                                 <Grid sx={{textAlign: 'center'}}>
                                     <Grid>
-                                        <DeleteForeverTwoToneIcon color="error" onClick={()=>{updateProduct(product._id, product.userQuanttity=0)}} sx={{verticalAlign: 'middle',ml:-3, cursor: 'pointer'}}/>
+                                        <DeleteForeverTwoToneIcon color="error" onClick={()=>{updateProduct(product._id, product.userQuanttity=0)}} sx={{verticalAlign: 'middle',ml:-3}}/>
                                         <Button sx={{ minWidth:160, ml:3, border:1.7, borderRadius:'10px'}} variant="outlined">
                                             <ShoppingCartIcon />
                                             buy
@@ -243,6 +247,8 @@ return (
                     </Card>
                 </Grid>
             ))}
+
+           
         </Grid>
     </Box>
     );

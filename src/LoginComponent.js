@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import {IconButton,Button,Link,Grid,TextField,FormControl,InputLabel, Input,InputAdornment,Box} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -6,12 +6,13 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 
 
-
 const LoginComponent = (props) => {
 
-const [email, setEmail] = React.useState('');
-const [password,setPassword] = React.useState('');
-const [showPassword,setShowPassword] = React.useState('');
+const [email, setEmail] = useState('');
+const [password,setPassword] = useState('');
+const [showPassword,setShowPassword] = useState('');
+// const DataBase = 'https://e-commerce-mobo-website.herokuapp.com/';
+const DataBase = 'http://localhost:3001/';
     
 const handleClickShowPassword = (e) => {
     setShowPassword(e.currentTarget);
@@ -26,12 +27,12 @@ const handleSubmit = async (e) => {
 
 e.preventDefault();
     try{
-        var response = await axios.post('https://e-commerce-mobo-website.herokuapp.com/register/login', {
+        var response = await axios.post(`${DataBase}register/login`, {
             password: password.value,
             email: email.value
         })
         if(response.data){
-            await localStorage.setItem('token', response.data);
+            localStorage.setItem('token', response.data);
             props.history.push('/home');
         }
     } catch (err) {
@@ -93,7 +94,7 @@ e.preventDefault();
                                 </Button>
                             </Grid>
                             <Grid sx={{textAlign: 'center', mb:2, cursor: 'pointer'}}>
-                                <p>Don&apos;t have account ? <Link onClick={() =>{props.history.push('/signin')}} variant="body2">Sign-In</Link></p>
+                                <p>Don&apos;t have account ? <Link onClick={() =>{props.history.push('/signup')}} variant="body2">Sign-Up</Link></p>
                             </Grid>
                     </form>
                     </Grid>

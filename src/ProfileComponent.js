@@ -15,25 +15,27 @@ const [userData, setUser] = useState([]);
 const localToken = localStorage.getItem('token');
 var decodedToken = jwt.decode(localToken);
 
-useEffect(async ()=>{
-    
 
-if(decodedToken==null){
-    props.history.push('/');
-    alert("Session Timeout Please Login Again...");
-}else{
-        if(decodedToken.exp*1000<=Date.now()){
+useEffect( () =>{ Fatch() })
+
+const Fatch = (async()=>{
+    if(decodedToken==null){
         props.history.push('/');
-        }else{
-        var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/users/getuser',
-        {
-            headers:{ token:localToken }
-        })
+        alert("Session Timeout Please Login Again...");
+    }else{
+            if(decodedToken.exp*1000<=Date.now()){
+            props.history.push('/');
+            }else{
+            var response = await axios.get('https://e-commerce-mobo-website.herokuapp.com/users/getuser',
+            {
+                headers:{ token:localToken }
+            })
+    
+            let createData = response.data;
+            Filter(createData);
+        }
+}})
 
-        let createData = response.data;
-        Filter(createData);
-    }
-}},[])
 
 const Filter = (filterData)=>{
 
@@ -45,31 +47,6 @@ const Filter = (filterData)=>{
     setUser(createdData);
 }
 
-
-{/*Updating Part not yet updated*/}
-
-// const updateProduct = (async (id, userQuanttity)=>{
-
-//     if(decodedToken==null){
-//       props.history.push('/');
-//       alert("Session Timeout Please Login Again...");
-//     }else{
-//         if(decodedToken.exp*1000<=Date.now()){
-//         props.history.push('/');
-//         }else{
-//         var response = await axios.patch(`https://e-commerce-mobo-website.herokuapp.com/product/updateproduct/${id}`,
-//         {
-//             userQuanttity: userQuanttity
-//         },
-//         {
-//         headers: { token:localToken }
-//         })
-//     var productsCopy = [...products];
-//     var index = productsCopy.findIndex(product => product.id === response.data._id);
-//     productsCopy[index] = response.data;
-
-//     Filter(productsCopy);
-// }}})
 
 const DeleteAccount = (async (id)=>{
 
@@ -163,7 +140,7 @@ return (
         </AppBar>
         <Grid container  sx={{'& .MuiTextField-root':{ mt:3},display: 'flex', justifyContent: 'center',mt:7}}>
             {userData.map((user)=>(<Box>
-                <div style={{padding:"20px", background:'#c8e4fb', width:'350px'}}>
+                <div style={{padding:"20px", background:'#c8e4fb', width:'350px'}}  key={user._id}>
                     <form  style={{textAlign: 'center'}}>
                         <Box component="form" sx={{ '& .MuiTextField-root': { m: 1.8,width: '12ch' }}}>
                             <TextField
@@ -171,7 +148,7 @@ return (
                                 label="First-Name"
                                 size="small"
                                 variant="standard"
-                                value={user.fname}
+                                value={user.first_name}
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -181,7 +158,7 @@ return (
                                 label="Last-Name"
                                 size="small"
                                 variant="standard"
-                                value={user.lname}
+                                value={user.last_name}
                                 InputProps={{
                                     readOnly: true,
                                 }}
@@ -205,7 +182,7 @@ return (
                                 label="Number"
                                 size="small"
                                 variant="standard"
-                                value={user.phone}
+                                value={user.number}
                                 InputProps={{
                                     readOnly: true,
                                 }}

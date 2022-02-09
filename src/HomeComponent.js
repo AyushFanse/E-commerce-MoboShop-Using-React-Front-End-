@@ -31,10 +31,6 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
 }));
 
-const CardDataInCenter = styled('div')(({ theme }) => ({
-  
-}));
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
@@ -141,94 +137,95 @@ const logout = ()=>{
   alert('You have been logged out');
 }
 
-    return (
-        <Box>
-        <AppBar position="static">
-          <Toolbar>
-            <Typography variant="h6"  component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-              MOBI-SHOPE
-            </Typography>
-            <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  inputProps={{ 'aria-label': 'search' }}
-                  onChange={(e)=>{setSearch(e.currentTarget.value.toLowerCase())}}
-                />
-              </Search>
-            &nbsp;
-            <Badge badgeContent={cart} color="error">
-              <ShoppingCartIcon onClick={()=>{props.history.push('/cart');}}/>
-            </Badge>
-              {(
-                <div>
-                  <IconButton 
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleMenu}
-                    color="inherit">
-                      <AccountCircle />
-                  </IconButton>
-                  <Menu id="menu"
-                  sx={{opacity: 0.95}}
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right'
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right'
-                        }}
-                        open={Boolean(anchorEl)}
-                        onClick={handleClose}>
-                    <Typography sx={{  display: 'flex',color:'primary', justifyContent: 'center', m:-1}}><h3>Hi {decodedToken.user.first_name} !</h3></Typography>
-                    <MenuItem sx={{ display: 'flex', justifyContent: 'center', width:'170px'}} onClick ={profile}>profile</MenuItem>
-                    <MenuItem sx={{ display: 'flex', justifyContent: 'center'}} onClick ={settings}>Settings</MenuItem>
-                    <MenuItem sx={{ display: 'flex', justifyContent: 'center'}}  onClick={logout}>Logout</MenuItem>
-                  </Menu>
-                </div>
-              )}
-          </Toolbar>
-        </AppBar>
-        <Grid container spacing={1} sx={{mt:2}}>
-          {products.filter((search)=>{
-            if(searches===""){
-              return search
-            }else if(search.image.toLowerCase().includes(searches) || search.processor.toLowerCase().includes(searches)){    
-              return search
-            }}).map(product => (
-            <CardDataInCenter key={product._id}>
-              <Grid item key={product._id}>
-                  <Typography variant="h7" component="div" sx={{ display: 'flex', justifyContent: 'center', mt:'15px'}}>
-                        {product.productName}
+return (
+      <Box>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6"  component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+            MOBI-SHOPE
+          </Typography>
+          <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={(e)=>{setSearch(e.currentTarget.value.toLowerCase())}}
+              />
+            </Search>
+          &nbsp;
+          <Badge badgeContent={cart} color="error">
+            <ShoppingCartIcon onClick={()=>{props.history.push('/cart');}}/>
+          </Badge>
+            {(
+              <div>
+                <IconButton 
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit">
+                    <AccountCircle />
+                </IconButton>
+                <Menu id="menu"
+                sx={{opacity: 0.95}}
+                      anchorEl={anchorEl}
+                      anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      keepMounted
+                      transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                      }}
+                      open={Boolean(anchorEl)}
+                      onClick={handleClose}>
+                  <Typography sx={{  display: 'flex',color:'primary', justifyContent: 'center', m:-1}}><h3>Hi {decodedToken.user.first_name} !</h3></Typography>
+                  <MenuItem sx={{ display: 'flex', justifyContent: 'center', width:'170px'}} onClick ={profile}>profile</MenuItem>
+                  <MenuItem sx={{ display: 'flex', justifyContent: 'center'}} onClick ={settings}>Settings</MenuItem>
+                  <MenuItem sx={{ display: 'flex', justifyContent: 'center'}}  onClick={logout}>Logout</MenuItem>
+                </Menu>
+              </div>
+            )}
+        </Toolbar>
+      </AppBar>
+      <Grid container spacing={1} sx={{mt:2}}>
+        {products.filter((search)=>{
+          if(searches===""){
+            return search
+          }else if(search.image.toLowerCase().includes(searches) || search.processor.toLowerCase().includes(searches)){    
+            return search
+          } return false;
+        }).map(product => (
+          <Grid key={product._id}>
+            <Grid item key={product._id}>
+                <Typography variant="h7" component="div" sx={{ display: 'flex', justifyContent: 'center', mt:'15px'}}>
+                      {product.productName}
+                </Typography>
+                <Card sx={{ width:'305px',height:'250px', ml:2.3, mt:1, borderRadius:'10px',border:3, borderColor: 'primary.main'}}>
+                  <Typography>
+                  <ImageList sx={{display: 'flex', justifyContent: 'center',m:2}}>
+                          <ImageListItem key={product.image}>
+                          <img src={`img/${product.image}?w=248&fit=crop&auto=format`}
+                              alt = {`${product.image}`}
+                              loading="lazy"
+                              style={{maxWidth: '100%', minHeight: '145px', maxHeight: '180px'}}/>
+                          </ImageListItem>
+                      </ImageList>
                   </Typography>
-                  <Card sx={{ width:'305px',height:'250px', ml:2.3, mt:1, borderRadius:'10px',border:3, borderColor: 'primary.main'}}>
-                    <Typography>
-                    <ImageList sx={{display: 'flex', justifyContent: 'center',m:2}}>
-                            <ImageListItem key={product.image}>
-                            <img src={`img/${product.image}?w=248&fit=crop&auto=format`}
-                                alt = {`${product.image}`}
-                                loading="lazy"
-                                style={{maxWidth: '100%', minHeight: '145px', maxHeight: '180px'}}/>
-                            </ImageListItem>
-                        </ImageList>
-                    </Typography>
-                    <CardActions sx={{disply:'flax', justifyContent: 'center', mt:'-12px'}}>
-                        <Button variant="outlined" size="small" sx={{border:1.7, borderRadius:'10px'}} onClick={()=>{updateProduct(product._id,++product.userQuanttity)}} disabled={product.userQuanttity>=1}>{add}</Button>
-                    </CardActions>
-                  </Card>
-              </Grid>
-            </CardDataInCenter>
-          ))}
-        </Grid>
-      </Box>
-    )
+                  <CardActions sx={{disply:'flax', justifyContent: 'center', mt:'-12px'}}>
+                      <Button variant="outlined" size="small" sx={{border:1.7, borderRadius:'10px'}} onClick={()=>{updateProduct(product._id,++product.userQuanttity)}} disabled={product.userQuanttity>=1}>{add}</Button>
+                  </CardActions>
+                </Card>
+            </Grid>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  )
 }
 
 export default ProductComponent;

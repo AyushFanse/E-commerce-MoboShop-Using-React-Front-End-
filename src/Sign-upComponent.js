@@ -132,7 +132,7 @@ return (
             <Box sx={{'& .MuiTextField-root':{ mt:2},display: 'flex', justifyContent: 'center',mt:10}}>
                 <Grid style={{padding:"20px", background:'#c8e4fb', width:'377px', borderRadius:'16px'}}  sx={{border:2, borderColor: 'primary.main'}}>
                     <form  style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
-                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1.8,width: '13.6ch' }}}>
+                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1.8,width: '12ch' }}}>
                             <TextField
                                 id="standard"
                                 label="First-Name"

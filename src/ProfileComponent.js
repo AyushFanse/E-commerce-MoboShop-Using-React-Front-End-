@@ -142,7 +142,7 @@ return (
             {userData.map((user)=>(<Box>
                 <div style={{padding:"20px", background:'#c8e4fb', width:'350px'}}  key={user._id}>
                     <form  style={{textAlign: 'center'}}>
-                        <Box component="form" sx={{ '& .MuiTextField-root': { m: 1.8,width: '13.6ch' }}}>
+                        <Box sx={{ '& .MuiTextField-root': { m: 1.8,width: '12ch' }}}>
                             <TextField
                                 id="standard"
                                 label="First-Name"

@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import {IconButton,Button,Link,Grid,TextField,FormControl,InputLabel, Input,InputAdornment,Box} from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -10,8 +12,9 @@ const LoginComponent = (props) => {
 
 const [email, setEmail] = useState('');
 const [password,setPassword] = useState('');
+const [Worning,setWorning] = useState('');
 const [showPassword,setShowPassword] = useState('');
-const DataBase = 'https://e-commerce-mobo-website.herokuapp.com/';
+const DataBase = 'https://e-commerce-mobo-website.herokuapp.com';
     
 const handleClickShowPassword = (e) => {
     setShowPassword(e.currentTarget);
@@ -26,50 +29,62 @@ const handleSubmit = async (e) => {
 
 e.preventDefault();
     try{
-        var response = await axios.post(`${DataBase}register/login`, {
+        const response = await axios.post(`${DataBase}/register/login`, {
             password: password.value,
             email: email.value
         })
-        if(response.data){
-            localStorage.setItem('token', response.data);
+        
+            setWorning(response.data);
+
+        if(response.data.status === 'success'){
+            localStorage.setItem('token', response.data.userToken);
             props.history.push('/home');
         }
     } catch (err) {
-        alert('Please Enter the Valide Data..!!!');
+        setWorning('Please Enter the Valide Data..!!!');
     }
 }
 return (
-    <Box sx={{display: 'flex', justifyContent: 'center', mt:10}}>
-        <Grid style={{padding:"20px", background:'#c8e4fb',  borderRadius:'16px', borderColor:'primary'}} sx={{border:2, borderColor: 'primary.main'}}>
-            <h2 style={{textAlign: 'center'}}>Login</h2>
-            <br/>
-            <form onSubmit={(e) => handleSubmit(e)}>
-                    <Grid>
-                    <FormControl sx={{ m: 1, width: '25ch'}}>
-                        <TextField
-                            id="input-with-icon-textfield"
-                            label="Email"
-                            value={props.email}
-                            onChange={(e) => {setEmail(e.currentTarget)}}
-                            InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="start">
-                                    <AccountCircle />
-                                </InputAdornment>
-                            ),
-                            }}
-                            variant="standard"
-                        />
-                        </FormControl>
-                    </Grid>
-                    <br/>
-                    <Grid>
-                        <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">
+    <>
+        <Box sx={{display: 'flex', justifyContent: 'center', mt:10}}>
+            <Grid style={{padding:"20px", background:'#c8e4fb',  borderRadius:'16px', borderColor:'primary'}} sx={{border:2, borderColor: 'primary.main'}}>
+                <h2 style={{textAlign: 'center'}}>Login</h2>
+                {
+                    Worning.status==='error'
+                ? 
+                    <Stack sx={{ width: '100%' }} spacing={2}>
+                        <Alert variant="filled" severity="error">{Worning.msg}</Alert>
+                    </Stack>
+                : 
+                    null
+                }    
+                <br/>
+                <form onSubmit={(e) => handleSubmit(e)}>
+                        <Box sx={{ mt:-2, '& .MuiTextField-root': {m: 1.8, width: 293}}}>
+                            <TextField
+                                id="input-with-icon-textfield"
+                                label="Email"
+                                value={props.email}
+                                onChange={(e) => {setEmail(e.currentTarget)}}
+                                InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="start">
+                                        <AccountCircle />
+                                    </InputAdornment>
+                                ),
+                                }}
+                                variant="standard"
+                            />
+                            </Box>
+                        <br/>
+                        <Grid>
+                        <FormControl sx={{ m: 1.8}} variant="standard">
                             <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                             <Input
                                 id="standard-adornment-password"
                                 type={showPassword? 'text' : 'password'}
                                 value={props.password}
+                                sx={{width: 293}}
                                 onChange={(e) => {setPassword(e.currentTarget)}}
                                 endAdornment={
                                     <InputAdornment position="end">
@@ -84,18 +99,19 @@ return (
                                 }
                             />
                         </FormControl>
-                    </Grid>
-                    <Grid sx={{textAlign: 'center'}}>
-                        <Button sx={{mt:4}} type="submit" variant="contained" disableElevation >
-                            Submit
-                        </Button>
-                    </Grid>
-                    <Grid sx={{textAlign: 'center', mb:2, cursor: 'pointer'}}>
-                        <p>Don&apos;t have account ? <Link onClick={() =>{props.history.push('/signup')}} variant="body2">Sign-Up</Link></p>
-                    </Grid>
-            </form>
-        </Grid>
-    </Box>
+                        </Grid>
+                        <Grid sx={{textAlign: 'center'}}>
+                            <Button sx={{mt:4}} type="submit" variant="contained" disableElevation >
+                                Submit
+                            </Button>
+                        </Grid>
+                        <Grid sx={{textAlign: 'center', mb:2, cursor: 'pointer'}}>
+                            <p>Don&apos;t have account ? <Link onClick={() =>{props.history.push('/signup')}} variant="body2">Sign-Up</Link></p>
+                        </Grid>
+                </form>
+            </Grid>
+        </Box>
+    </>
 )
         
     }

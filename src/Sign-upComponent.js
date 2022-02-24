@@ -21,7 +21,6 @@ const [showPassword,setShowPassword] = useState('');
 const [Worning,setWorning] = useState('');
 const DataBase = 'https://e-commerce-mobo-website.herokuapp.com';
 
-
 //-------------------------------* PASSWORD VISIBILITY FUNCTIONS *-------------------------------//
 
 const handleClickShowPassword = (e) => {
@@ -36,31 +35,31 @@ setShowPassword('');
 const handleSubmit = async (e) => {
 
 e.preventDefault();
-            
-try{        
-    const response = await axios.post(`${DataBase}/register/registerUser`, {
-        username:username.value,
-        first_name:first_name.value,
-        last_name:last_name.value,
-        email: email.value.toLowerCase(),
-        address:address.value,
-        number:number.value,
-        password: password.value
-    })
-    
-    setWorning(response.data);
-    alert(response.data.msg);
-    if(response.data.status==='success'){
-        props.history.push('/');   
-    }
-}
-catch(err) {
-    if(err.response.data.msg === undefined){
-        alert('Fill all the details');
-    }else{
-        alert(err.response.data.msg);
-    }
-    console.warn(err);
+
+let response = '';           
+    try{  
+             
+        if(first_name==='' && last_name==='' && username===''  && email==='' && address==='' && number==='' && password==='' ) {   
+            setWorning({status:'error', msg:'Please fill all the details..!!!'})   
+        }else{     
+            response = await axios.post(`${DataBase}/register/registerUser`, {
+                username:username.value,
+                first_name:first_name.value,
+                last_name:last_name.value,
+                email: email.value,
+                address:address.value,
+                number:number.value,
+                password: password.value
+            })
+        
+            setWorning(response.data);
+            console.log()
+            if(response.data.status==='success'){
+                props.history.push('/');   
+            }}
+    } catch (err) {
+            setWorning({status:'error', msg:err.response.data.msg});
+            alert(err.response.data.msg);
     }
 }
 
@@ -118,6 +117,16 @@ return (
                             onChange={(e) => {setUsername(e.currentTarget)}}
                             />
                     </Box>
+                    <Box sx={{  mt:-2,'& .MuiTextField-root': { m: 1.8, width: 293}}}>
+                        <TextField
+                                id="standard"
+                                label="Email"
+                                size="small"
+                                variant="standard"
+                                value={props.email}
+                                onChange={(e) => {setEmail(e.currentTarget)}}
+                                />  
+                    </Box>
                     <Box sx={{ mt:-2, '& .MuiTextField-root': {m: 1.8, width: 293}}}>
                         <TextField
                             id="standard"
@@ -150,17 +159,7 @@ return (
                             }
                         />
                     </FormControl>
-                    <Box sx={{ '& .MuiTextField-root': { m: 1.8, width: 293}}}>
-                        <TextField
-                                id="standard"
-                                label="Email"
-                                size="small"
-                                variant="standard"
-                                value={props.email}
-                                onChange={(e) => {setEmail(e.currentTarget)}}
-                                />  
-                    </Box>
-                    <Box sx={{  mt:-2, '& .MuiTextField-root': { m: 1.8, width: 293}}}>
+                    <Box sx={{'& .MuiTextField-root': { m: 1.8, width: 293}}}>
                         <TextField
                             id="standard"
                             label="Address"

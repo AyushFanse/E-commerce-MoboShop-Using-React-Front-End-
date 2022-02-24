@@ -28,22 +28,29 @@ setShowPassword('');
 const handleSubmit = async (e) => {
 
 e.preventDefault();
+let response = '';
     try{
-        const response = await axios.post(`${DataBase}/register/login`, {
-            password: password.value,
-            email: email.value
-        })
-        
-            setWorning(response.data);
+        if( email==='' && password==='' ){ 
+            setWorning({ status:'error', msg:'Please fill all the details..!!!' });      
+            }else{
+                response = await axios.post(`${DataBase}/register/login`, {
+                    password: password.value,
+                    email: email.value
+                })         
+                
+                setWorning(response.data);
 
-        if(response.data.status === 'success'){
-            localStorage.setItem('token', response.data.userToken);
-            props.history.push('/home');
-        }
+                if(response.data.status === 'success'){
+                    localStorage.setItem( 'token', response.data.userToken );
+                    props.history.push('/home');
+                }}
     } catch (err) {
-        setWorning('Please Enter the Valide Data..!!!');
+        setWorning({status:'error', msg:err.response.data.msg});
+        alert(err.response.data.msg);
     }
 }
+
+
 return (
     <>
         <Box sx={{display: 'flex', justifyContent: 'center', mt:10}}>

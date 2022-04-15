@@ -1,14 +1,10 @@
 import React,{ useEffect, useState } from 'react';
 import { AppBar, Badge,Card, MenuItem, Menu, styled, alpha, ImageListItem, ImageList, InputBase, Grid, Box, Toolbar, Typography, Button, IconButton,  CardActions } from '@mui/material';
-import SearchIcon  from '@mui/icons-material/Search';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCartTwoTone';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import {  Search, ShoppingCart, AccountCircle } from '@mui/icons-material';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 
-const Search = styled('div')(({ theme }) => ({  
-
-
+const SearchDiv = styled('div')(({ theme }) => ({  
   
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -61,7 +57,7 @@ let [products, setProduct] = useState([]);
 let [cart,setCart] = useState(0);
 const localToken = localStorage.getItem('token');
 var decodedToken = jwt.decode(localToken);
-const DataBase = 'https://e-commerce-mobo-website.herokuapp.com/';
+const DataBase = 'https://e-commerce-mobo-website.herokuapp.com/';console.log(decodedToken.user)
 
 useEffect( () =>{ Fatch() })
 
@@ -80,6 +76,39 @@ const Fatch = (async()=>{
   updateCart(response.data);
 }})
 
+
+//-------------------------------* SAVE AND REMOVE SAVE POST FUNCTIONS *-------------------------------//
+
+// const SavePost = (async (id)=>{
+//   let updatedRecipe = [];
+
+//   let SavePost = await axios.put(`${URL}/users/saveproduct/${user._id}`,{
+//         saved:id
+//       })
+//     updatedRecipe = await recipes.map((postes)=>{
+//     if(postes._id === SavePost._id ){
+//     return SavePost
+//     }else{
+//     return postes
+//     }
+//     })
+//     setRecipes(updatedRecipe);
+//     })
+
+// const deleteSavedPost = (async (id)=>{
+//   let updatedRecipe = [];
+//   let SavePost = await axios.put(`${URL}/users/deletesavedproduct/${user._id}`,{
+//                 saved:id
+//             })
+//       updatedRecipe = await recipes.map((postes)=>{
+//               if(postes._id === SavePost._id ){
+//                 return SavePost
+//               }else{
+//                 return postes
+//               }
+//             })
+//             setRecipes(updatedRecipe);
+// })
 
 const handleMenu = (event) => {
     setAnchorEl(event.currentTarget)
@@ -141,22 +170,22 @@ return (
       <Box>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6"  component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-            MOBI-SHOPE
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+            MOBI SHOP
           </Typography>
-          <Search>
+          <SearchDiv>
               <SearchIconWrapper>
-                <SearchIcon />
+                <Search />
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 onChange={(e)=>{setSearch(e.currentTarget.value.toLowerCase())}}
               />
-            </Search>
+            </SearchDiv>
           &nbsp;
           <Badge badgeContent={cart} color="error">
-            <ShoppingCartIcon onClick={()=>{props.history.push('/cart');}}/>
+            <ShoppingCart onClick={()=>{props.history.push('/cart');}}/>
           </Badge>
             {(
               <div>
@@ -196,28 +225,30 @@ return (
         {products.filter((search)=>{
           if(searches===""){
             return search
-          }else if(search.image.toLowerCase().includes(searches) || search.processor.toLowerCase().includes(searches)){    
+          }else if(search.productName.toLowerCase().includes(searches) || search.processor.toLowerCase().includes(searches)){    
             return search
           } return false;
         }).map(product => (
           <Grid key={product._id}>
             <Grid item key={product._id}>
-                <Typography variant="h7" component="div" sx={{ display: 'flex', justifyContent: 'center', mt:'15px'}}>
-                      {product.productName}
-                </Typography>
-                <Card sx={{ width:'305px',height:'250px', ml:2.3, mt:1, borderRadius:'10px',border:3, borderColor: 'primary.main'}}>
+                <Card sx={{ width:'305px',height:'auto', ml:2.3, mt:1, borderRadius:'10px', boxShadow: '0px 0px 15px -6px rgba(0, 0, 0, 0.75)'}}>
+                  <div style={{ fontSize: '0.9rem', fontWeight:'500', display: 'flex', justifyContent: 'center', marginTop:'15px', textAlign:"center"}}>
+                        {product.productName}
+                  </div>
                   <Typography>
                   <ImageList sx={{display: 'flex', justifyContent: 'center',m:2}}>
-                          <ImageListItem key={product.image}>
-                          <img src={`img/${product.image}?w=248&fit=crop&auto=format`}
-                              alt = {`${product.image}`}
+                          <ImageListItem key={product.id}>
+                            <img src={`${product.file}`}
+                              alt = ""
                               loading="lazy"
-                              style={{maxWidth: '100%', minHeight: '145px', maxHeight: '180px'}}/>
+                              style={{maxWidth: '100%', minHeight: '145px', maxHeight: '180px'}}
+                            />
                           </ImageListItem>
                       </ImageList>
                   </Typography>
                   <CardActions sx={{disply:'flax', justifyContent: 'center', mt:'-12px'}}>
                       <Button variant="outlined" size="small" sx={{border:1.7, borderRadius:'10px'}} onClick={()=>{updateProduct(product._id,++product.userQuanttity)}} disabled={product.userQuanttity>=1}>{add}</Button>
+                      {/*{recipe.likes.includes(user._id) ? <FavoriteIcon id="error" className="like" onClick={()=>{Unlike(recipe._id)}} /> : <FavoriteBorderIcon className="like"  onClick={()=>{Like(recipe._id)}} /> } {recipe.likes.length}*/}
                   </CardActions>
                 </Card>
             </Grid>

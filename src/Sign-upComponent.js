@@ -2,10 +2,8 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import {IconButton,Button,Grid,TextField,FormControl,InputLabel,Input,AppBar,Link,Toolbar,Typography,InputAdornment,Box} from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import {IconButton,Button,Grid,TextField,FormControl,InputLabel,Input,Link,InputAdornment,Box} from '@mui/material';
+import { Visibility, KeyboardBackspace, VisibilityOff, HowToReg } from '@mui/icons-material';
 
 const LoginComponent = (props) => {
 
@@ -28,8 +26,8 @@ const handleClickShowPassword = (e) => {
 };
 
 const handleMouseDownPassword = (event) => {
-event.preventDefault();
-setShowPassword('');
+    event.preventDefault();
+    setShowPassword('');
 };
 
 const handleSubmit = async (e) => {
@@ -37,8 +35,7 @@ const handleSubmit = async (e) => {
 e.preventDefault();
 
 let response = '';           
-    try{  
-             
+    try{               
         if(first_name==='' && last_name==='' && username===''  && email==='' && address==='' && number==='' && password==='' ) {   
             setWorning({status:'error', msg:'Please fill all the details..!!!'})   
         }else{     
@@ -53,11 +50,11 @@ let response = '';
             })
         
             setWorning(response.data);
-            console.log()
+
             if(response.data.status==='success'){
                 props.history.push('/');   
             }}
-    } catch (err) {
+    } catch (err){
             setWorning({status:'error', msg:err.response.data.msg});
             alert(err.response.data.msg);
     }
@@ -66,18 +63,12 @@ let response = '';
 //-------------------------------* VALIDATION FUNCTIONS *-------------------------------//
 return (
     <>
-        <AppBar position="static">
-            <Toolbar variant="dense">
-                <IconButton onClick={()=>{props.history.goBack()}} edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                <NavigateBeforeIcon/>
-                </IconButton>
-                <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
-                    Sign-Up
-                </Typography>
-            </Toolbar>
-        </AppBar>
-        <Box sx={{'& .MuiTextField-root':{ mt:2},display: 'flex', justifyContent: 'center',mt:10}}>
-            <Grid style={{padding:"20px", background:'#c8e4fb', width:'377px', borderRadius:'16px'}}  sx={{border:2, borderColor: 'primary.main'}}>
+        <IconButton onClick={()=>{props.history.goBack()}} edge="start" color="inherit" aria-label="menu" sx={{ ml: 2 }}>
+            <KeyboardBackspace/>
+        </IconButton>
+        <Box sx={{'& .MuiTextField-root':{ mt:2},display: 'flex', justifyContent: 'center'}}>
+            <Grid style={{ padding:"20px", background:'#c8e4fb', width:'377px', borderRadius:'5px', margin:"20px auto", boxShadow: '0px 0px 15px -6px rgba(0, 0, 0, 0.75)' }}  sx={{ borderBottom:5, borderColor: 'primary.main'}}>
+                <h2 style={{alignItems: 'center', cursor: 'default', display:'flex', justifyContent: 'space-evenly', padding: '0px 100px'}}><HowToReg/> Signup</h2>
                 {
                         Worning?.status==='error'
                     ? 
@@ -88,7 +79,7 @@ return (
                         null
                 }
                 <form style={{textAlign: 'center'}} onSubmit={(e) => handleSubmit(e)}>
-                    <Box sx={{ '& .MuiTextField-root': { m: 1.8,width: '12ch' }}}>
+                    <Box sx={{ '& .MuiTextField-root': { m: 1.8,width: '11.2ch' }}}>
                         <TextField
                             id="standard"
                             label="First-Name"
@@ -173,8 +164,8 @@ return (
                         <Button sx={{mt:2}} type="submit" variant="contained" disableElevation >
                             Create Account
                         </Button>
-                        <Grid sx={{textAlign: 'center', mb:-2, cursor: 'pointer'}}>
-                            <p>Already have account ? <Link onClick={() =>{props.history.push('/')}} variant="body2">Log-In</Link></p>
+                        <Grid sx={{textAlign: 'center', mb:-2, cursor: 'default'}}>
+                            <p>Already have account ? <Link onClick={() =>{props.history.push('/')}} variant="body2" sx={{textDecoration:"none", cursor: 'pointer'}} >Login</Link></p>
                         </Grid>                            
                     </Grid>
                 </form>

@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import {IconButton,Button,Link,Grid,TextField,FormControl,InputLabel, Input,InputAdornment,Box} from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Visibility, AccountCircle, VisibilityOff, ManageAccounts, LockTwoTone } from '@mui/icons-material';
 
 
 const LoginComponent = (props) => {
-
+console.log(props)
+const history = useHistory();
 const [email, setEmail] = useState('');
 const [password,setPassword] = useState('');
 const [Worning,setWorning] = useState('');
@@ -53,9 +53,15 @@ let response = '';
 
 return (
     <>
-        <Box sx={{display: 'flex', justifyContent: 'center', mt:10}}>
-            <Grid style={{padding:"20px", background:'#c8e4fb',  borderRadius:'16px', borderColor:'primary'}} sx={{border:2, borderColor: 'primary.main'}}>
-                <h2 style={{textAlign: 'center'}}>Login</h2>
+        <a href='http://localhost:3002/' style={{position:'absolute',right:40, height:'10px' }}>
+            <Button style={{display:'flex', cursor:'pointer', alignItems: 'center', textUnderlinePosition: 'under', textTransform: 'capitalize'}}><ManageAccounts style={{color:'#1976d2'}} />Admin Login</Button>
+        </a>
+        <Box sx={{display: 'flex', justifyContent: 'center' }}>
+            <Grid style={{padding:"20px", background:'#c8e4fb',  borderRadius:'5px', borderColor:'primary' , margin:"100px auto", boxShadow: '0px 0px 15px -6px rgba(0, 0, 0, 0.75)'}} sx={{borderBottom:5, borderColor: 'primary.main'}}>
+                <h2 style={{textAlign: 'center', cursor: 'default', display:'flex', justifyContent: 'space-evenly', padding: '0px 100px'}}>
+                    <LockTwoTone />
+                    Login
+                </h2>
                 {
                     Worning.status==='error'
                 ? 
@@ -112,14 +118,13 @@ return (
                                 Submit
                             </Button>
                         </Grid>
-                        <Grid sx={{textAlign: 'center', mb:2, cursor: 'pointer'}}>
-                            <p>Don&apos;t have account ? <Link onClick={() =>{props.history.push('/signup')}} variant="body2">Sign-Up</Link></p>
+                        <Grid sx={{textAlign: 'center', mb:2, cursor: 'default'}}>
+                            <p>Don&apos;t have account ? <Link onClick={() =>{history.replace('/signup')}} variant="body2" sx={{textDecoration:"none", cursor: 'pointer'}} >Sign-Up</Link></p>
                         </Grid>
                 </form>
             </Grid>
         </Box>
     </>
-)
-        
-    }
+    )
+}
 export default LoginComponent;

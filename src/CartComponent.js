@@ -2,11 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Box, AppBar, Button, Card, Table, ImageListItem, ImageList, TableCell, TableRow, TableBody, TableHead,  TableContainer, Grid, CardContent, Toolbar, MenuItem, Menu, IconButton, Typography} from '@mui/material';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCartTwoTone';
+import Payment from './Components/Payment';
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-
 
 
 const CartComponent = (props)=>{
@@ -18,6 +17,12 @@ var [products, setProduct] = useState([]);
 const localToken = localStorage.getItem('token');
 var decodedToken = jwt.decode(localToken);
 const DataBase = 'https://e-commerce-mobo-website.herokuapp.com/';
+const formatter = new Intl.NumberFormat("en-US", 
+{
+    style: "currency",
+    currency: "INR",
+    minimumFractionDigits: 0,
+});
 
 
 useEffect( () =>{ Fatch() })
@@ -71,6 +76,7 @@ const updateProduct = (async (id, userQuanttity)=>{
     Filter(productsCopy);
 }}})
 
+//--------------------* Navigation Tabs *--------------------//
 const profile = ()=>{
     props.history.push('/profile');
 }
@@ -96,7 +102,6 @@ const logout = ()=>{
     props.history.push('/');
     alert('You have been logged out');
     }
-
 
 return (
     <Box sx={{ flexGrow: 1}}>
@@ -154,9 +159,9 @@ return (
                         <CardContent direction="col" >
                             <CardContent sx={{display: 'flex', justifyContent: 'center'}}>
                                 <ImageList sx={{ maxWidth: '180px', minWidth: '100px', maxHeight: '280px', height:'100%', display: 'flex', mt:'-5px' , mb:'-2px'}}>
-                                    <ImageListItem key={product.image}>
-                                        <img src={`img/${product.image}?w=248&fit=crop&auto=format`}
-                                            alt = {`${product.image}`}
+                                    <ImageListItem key={product.id}>
+                                        <img src={product.file}
+                                            alt = ""
                                             loading="lazy"
                                             style={{maxWidth: '100%', minHeight: '160px', maxHeight: '180px'}}/>
                                     </ImageListItem>
@@ -169,7 +174,7 @@ return (
                                     {product.productName}
                                 </Typography>
                                 <Typography sx={{ mb: 0.5 }} color="text.secondary">
-                                    Price: ₹{product.price}.00
+                                    Price: {formatter.format(product.price)}.00
                                 </Typography>
                                 <Typography sx={{ mb: 0.7 }} variant="h7" component="div">
                                     Ram: {product.ram}GB &nbsp; Rom: {product.rom}GB
@@ -178,10 +183,10 @@ return (
                                     Processor: {product.processor}
                                 </Typography>
                                 <Typography sx={{ mb: 0.7 }} variant="h7" component="div" size="2px">
-                                    Battry:{product.battry}MHz
+                                    Battery:{product.battery}MHz
                                 </Typography>
                                 <Typography sx={{ mb: 0.7 }} variant="h7" component="div" size="2px">
-                                    Avg.Quentity: {product.quanttity}
+                                    Avg.Quantity: {product.quanttity}
                                 </Typography>
                             </Grid>
                         </CardContent>
@@ -191,7 +196,7 @@ return (
                                     <TableHead>
                                         <TableRow>
                                             <TableCell color="primary" >Details</TableCell>
-                                            <TableCell align="right">Tally</TableCell>
+                                            <TableCell align="right">Total</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
@@ -199,23 +204,23 @@ return (
                                             <TableCell component="th" scope="row">
                                                 Price
                                             </TableCell>
-                                            <TableCell align="right">₹{product.price}.00</TableCell>
+                                            <TableCell align="right">{formatter.format(product.price)}.00</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell component="th" scope="row">
                                                 Delivery Fee
                                             </TableCell>
-                                            <TableCell align="right">₹{fee}.00</TableCell>
+                                            <TableCell align="right">{formatter.format(fee)}.00</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell component="th" scope="row">
-                                                GST-Tax
+                                                GST-Tax (18% Inc.)
                                             </TableCell>
-                                            <TableCell align="right">₹{tax}.00</TableCell>
+                                            <TableCell align="right">{formatter.format((product.price*product.userQuanttity*18)/100)}</TableCell>
                                         </TableRow>
                                         <TableRow>
                                             <TableCell component="th" scope="row">
-                                                Quentity
+                                                Quantity
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Button sx={{ minWidth:20, mb:-1, mt:-1}} onClick={()=>{updateProduct(product._id, --product.userQuanttity)}} disabled={product.userQuanttity<=0}>-</Button>
@@ -227,23 +232,20 @@ return (
                                             <TableCell component="th" scope="row">
                                                 Total
                                             </TableCell>
-                                            <TableCell align="right">₹{product.price*product.userQuanttity+tax+fee}.00</TableCell>
+                                            <TableCell align="right">{formatter.format(product.price*product.userQuanttity+fee)}.00</TableCell>
                                         </TableRow>
                                     </TableBody>
                                 </Table>
                             </TableContainer>
                         </CardContent>                       
-                            <CardContent>
-                                <Grid sx={{textAlign: 'center'}}>
-                                    <Grid>
-                                        <DeleteForeverTwoToneIcon color="error" onClick={()=>{updateProduct(product._id, product.userQuanttity=0)}} sx={{verticalAlign: 'middle',ml:-3}}/>
-                                        <Button sx={{ minWidth:160, ml:3, border:1.7, borderRadius:'10px'}} variant="outlined">
-                                            <ShoppingCartIcon />
-                                            buy
-                                        </Button>
-                                    </Grid>
+                        <CardContent>
+                            <Grid sx={{textAlign: 'center'}}>
+                                <Grid className="buyButtons">
+                                    <DeleteForeverTwoToneIcon color="error" onClick={()=>{updateProduct(product._id, product.userQuanttity=0)}} sx={{verticalAlign: 'middle',ml:-3}} />
+                                    <Payment product={product} />
                                 </Grid>
-                            </CardContent>
+                            </Grid>
+                        </CardContent>
                     </Card>
                 </Grid>
             ))}

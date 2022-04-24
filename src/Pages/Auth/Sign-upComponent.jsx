@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import {IconButton,Button,Grid,TextField,FormControl,InputLabel,Input,Link,InputAdornment,Box} from '@mui/material';
 import { Visibility, KeyboardBackspace, VisibilityOff, HowToReg } from '@mui/icons-material';
 
-const LoginComponent = (props) => {
+const LoginComponent = ({DataBase},props) => {
 
 
 const [email, setEmail] = useState('');
@@ -17,7 +17,6 @@ const [username,setUsername] = useState('');
 const [number,setNumber] = useState('');
 const [showPassword,setShowPassword] = useState('');
 const [Worning,setWorning] = useState('');
-const DataBase = 'https://e-commerce-mobo-website.herokuapp.com';
 
 //-------------------------------* PASSWORD VISIBILITY FUNCTIONS *-------------------------------//
 

@@ -1,26 +1,31 @@
 import React from 'react';
-import LoginComponent from './LoginComponent';
-import {Route,BrowserRouter, Switch} from "react-router-dom";
-import HomeComponent from './HomeComponent';
-import CartComponent from './CartComponent';
-import ProfileComponent from './ProfileComponent';
-import SignupComponent from './Sign-upComponent';
-import SettingsComponent from './SettingsComponent';
+import { Route, BrowserRouter, Switch } from "react-router-dom";
 
-function Routes(){
+//-------------------------------* PAGES *-------------------------------//
+import Login from './Pages/Auth/LoginComponent.jsx';
+import Signup from './Pages/Auth/Sign-upComponent.jsx';
+import Home from './Pages/Home/HomeComponent.jsx';
+import Cart from './Pages/Cart/CartComponent.jsx';
+import Profile from './Pages/Profile/ProfileComponent.jsx';
+import EditUser from './Pages/Profile/EditUser.jsx';
+
+
+
+const Routes = () => {
+
+    const DataBase = 'https://e-commerce-mobo-website.herokuapp.com';
+
     return(
-        <>
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path="/" component={LoginComponent}></Route>
-                    <Route exact path="/signup" component={SignupComponent}></Route>
-                    <Route exact path='/home' component={HomeComponent}></Route>
-                    <Route exact path='/cart' component={CartComponent}></Route>
-                    <Route exact path='/profile' component={ProfileComponent}></Route>
-                    <Route exact path='/settings' component={SettingsComponent}></Route>
-                </Switch>
-            </BrowserRouter>
-        </> 
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/"><Login DataBase={DataBase} /></Route>
+                <Route exact path="/signup"><Signup DataBase={DataBase} /></Route>                
+                <Route exact path='/home'><Home DataBase={DataBase} /></Route>
+                <Route exact path='/cart' ><Cart DataBase={DataBase} /></Route>    
+                <Route exact path='/profile' ><Profile DataBase={DataBase} /></Route>
+                <Route exact path='/profile/:userId' ><EditUser DataBase={DataBase} /></Route>
+            </Switch>
+        </BrowserRouter>
     )
 }
 

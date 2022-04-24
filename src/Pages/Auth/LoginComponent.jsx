@@ -7,14 +7,12 @@ import {IconButton,Button,Link,Grid,TextField,FormControl,InputLabel, Input,Inpu
 import { Visibility, AccountCircle, VisibilityOff, ManageAccounts, LockTwoTone } from '@mui/icons-material';
 
 
-const LoginComponent = (props) => {
-console.log(props)
+const LoginComponent = ({DataBase},props) => {
 const history = useHistory();
 const [email, setEmail] = useState('');
 const [password,setPassword] = useState('');
 const [Worning,setWorning] = useState('');
 const [showPassword,setShowPassword] = useState('');
-const DataBase = 'https://e-commerce-mobo-website.herokuapp.com';
     
 const handleClickShowPassword = (e) => {
     setShowPassword(e.currentTarget);
@@ -42,7 +40,7 @@ let response = '';
 
                 if(response.data.status === 'success'){
                     localStorage.setItem( 'token', response.data.userToken );
-                    props.history.push('/home');
+                    history.replace('/home');
                 }}
     } catch (err) {
         setWorning({status:'error', msg:err.response.data.msg});

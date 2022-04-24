@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
+import axios from 'axios';
 
-const Payment = ({product}) => {
+const Payment = ({ product, userQuanttity, DataBase, user }) => {
     const fee = 40;
-    const tax = 20;
     
 //----------------------* Payment Function *---------------------//
 
@@ -39,17 +38,25 @@ const Payment = ({product}) => {
         const options = {
         key: "rzp_test_yRusAFGHsHMccG",
         currency: "INR",
-        amount: (product.price*product.userQuanttity+tax+fee)*100,
+        amount: (product.price*userQuanttity+fee)*100,
         name: product.productName,
         description: 
         `
-        Quentity:${product.userQuanttity} | Spe: ${product.ram}GB / ${product.rom}GB \n
+        Quentity:${userQuanttity} | Spe: ${product.ram}GB / ${product.rom}GB \n
             
         `,
         image:`${product.file}`,
 
-        handler: function (response) {
-            alert("Payment Successfully");
+        handler: async function (res) {
+            const respo = await axios.put(`${DataBase}/users/deletesavedproduct/${user}`,
+                {
+                    savedProduct:product._Id
+                })
+
+            if(respo.ok){
+                console.log(res)
+                alert("Payment Successfully");
+            }
         },
         prefill: {
             name: product.productName,
@@ -70,8 +77,5 @@ const Payment = ({product}) => {
     );
 }
 
-Payment.propTypes = {
-    product: PropTypes.string.isRequired
-};
 
 export default Payment;

@@ -51,7 +51,7 @@ let response = '';
 
 return (
     <>
-        <a href='mobo-shop-admin.netlify.app' style={{position:'absolute',right:40, height:'10px' }}>
+        <a href='https://moboshopadmin.netlify.app' target='_blank' rel="noopener noreferrer" style={{position:'absolute',right:40, height:'10px' }}>
             <Button style={{display:'flex', cursor:'pointer', alignItems: 'center', textUnderlinePosition: 'under', textTransform: 'capitalize'}}><ManageAccounts style={{color:'#1976d2'}} />Admin Login</Button>
         </a>
         <Box sx={{display: 'flex', justifyContent: 'center' }}>

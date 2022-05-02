@@ -4,12 +4,6 @@
 :root{
     --theam:#1976d2;
 }
-/*------------------------* Navbar *------------------------*/
-
-
-
-/*------------------------* Login Page *------------------------*/
-
 /*------------------------* Buy Button *------------------------*/
 .buy_out{
     display:flex;
@@ -40,18 +34,20 @@
 }
 #HomeCont{
     margin-top: 75px;
-    transition:2s all ease;
+    transition:1s all ease;
 }
 #homeCard{
     width:305px;
     height:auto;
+    margin: 12px;
     border-radius:10px;
     box-shadow: 0px 0px 15px -6px rgba(0, 0, 0, 0.75);
 
 }
 #CartCont{
+    margin: 0;
     margin-top: 62px;
-    transition:2s all ease;
+    transition:1s all ease;
 }
 @media (max-width: 768px) {
     #HomeCont{
@@ -61,7 +57,7 @@
     #CartCont{
         margin-top: 55px;
         justify-content: center;
-        transition:2s all ease;
+        transition:1s all ease;
     }
 }
 @media (max-width: 650px) {
@@ -70,5 +66,13 @@
     }
     #homeCard{
         width:100%;
+        margin: 12px 0;
     }
+}
+#ErrorCont{
+    margin-top: 140px;
+    place-content: center;
+}
+#ErrorCont img{
+    width:400px;
 }

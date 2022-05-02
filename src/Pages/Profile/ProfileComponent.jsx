@@ -11,7 +11,7 @@ import {
   AdminPanelSettingsOutlined, 
   EditTwoTone 
 } from '@mui/icons-material';
-import Navbar from '../../Components/Navbar';
+import Navbar from '../../Components/Navbar/Navbar';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import "./user.css";
@@ -64,7 +64,7 @@ const DeleteAccount = (async (id)=>{
 
 return (
     <Box sx={{ flexGrow: 1}}>
-        <Navbar user={user} page={'Profile'} />
+        <Navbar page={'Profile'} />
         <Grid container  sx={{'& .MuiTextField-root':{ mt:3},display: 'flex', justifyContent: 'center',mt:7}}>
             <div className="userContainer">
                 <div className="userShow">

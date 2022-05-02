@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from "react";
 import { EditTwoTone } from '@mui/icons-material';
 import { useParams } from "react-router-dom";
-import Navbar from '../../Components/Navbar';
+import Navbar from '../../Components/Navbar/Navbar';
 import { Alert, Stack } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
@@ -17,7 +17,6 @@ const User = ({DataBase}) => {
   const FatchRef = useRef();
   const localToken = localStorage.getItem('token');
   const decodedToken = jwt.decode(localToken);
-  const user = decodedToken.user;
   const history = useHistory();
   
   useEffect(()=>{
@@ -56,7 +55,6 @@ const User = ({DataBase}) => {
                 username:updatedData.username.value,
                 email:updatedData.email.value,
                 address:updatedData.address.value,
-                post:updatedData.post.value,
                 number:updatedData.number.value
             } )
 
@@ -72,7 +70,7 @@ const User = ({DataBase}) => {
 
   return (
     <div className="user">
-    <Navbar user={user} page={'Edit User'} />
+    <Navbar page={'Edit User'} />
       <div className="userTitleContainer">
         <div className="userUpdate">
           <span className="userUpdateTitle">Edit <EditTwoTone/></span>
@@ -141,14 +139,7 @@ const User = ({DataBase}) => {
                   placeholder={ data.address }
                   className="userUpdateInput"
                 />
-              </div> 
-              <div className="userUpdateItem">
-                <label>Post</label>
-                <select name='post' className="userUpdateOption">
-                  <option value="Admin" defaultValue={data.post==='Admin' ? true : null} >Admin</option>
-                  <option value="User" defaultValue={data.post==='Admin' ? null : true} >User</option>
-                </select>
-              </div>             
+              </div>              
               <div className="userUpdateItem">
                 <button className="userUpdateButton"  type="submit">Update</button>
               </div>

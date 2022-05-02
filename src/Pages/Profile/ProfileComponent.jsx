@@ -29,10 +29,11 @@ const user = decodedToken.user;
         
     if(decodedToken===null){
         history.push('/');
-        alert("Session Timeout Please Login Again...");
     }else{
             if(decodedToken.exp*1000<=Date.now()){
-            history.push('/');
+                localStorage.removeItem('token');
+                alert("Session Timeout Please Login Again...");
+                history.push('/');
             }
         }
     },[decodedToken,history])

@@ -51,7 +51,7 @@ let response = '';
             setWorning(response.data);
 
             if(response.data.status==='success'){
-                props.history.push('/');   
+                props.history.push('/login');   
             }}
     } catch (err){
             setWorning({status:'error', msg:err.response.data.msg});
@@ -164,7 +164,7 @@ return (
                             Create Account
                         </Button>
                         <Grid sx={{textAlign: 'center', mb:-2, cursor: 'default'}}>
-                            <p>Already have account ? <Link onClick={() =>{props.history.push('/')}} variant="body2" sx={{textDecoration:"none", cursor: 'pointer'}} >Login</Link></p>
+                            <p>Already have account ? <Link onClick={() =>{props.history.push('/login')}} variant="body2" sx={{textDecoration:"none", cursor: 'pointer'}} >Login</Link></p>
                         </Grid>                            
                     </Grid>
                 </form>

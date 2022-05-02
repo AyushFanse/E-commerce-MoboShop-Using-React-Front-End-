@@ -40,7 +40,7 @@ let response = '';
 
                 if(response.data.status === 'success'){
                     localStorage.setItem( 'token', response.data.userToken );
-                    history.replace('/home');
+                    history.replace('/');
                 }}
     } catch (err) {
         setWorning({status:'error', msg:err.response.data.msg});

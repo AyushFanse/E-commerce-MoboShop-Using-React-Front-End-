@@ -1,17 +1,16 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {Box, Button, Card, Table, ImageListItem, ImageList, TableCell, TableRow, TableBody, TableHead,  TableContainer, Grid, CardContent, Typography} from '@mui/material';
-import Payment from '../../Components/Payment';
+import Payment from '../../Components/Payment/Payment';
 import { useHistory } from 'react-router-dom';
 import DeleteForeverTwoToneIcon from '@mui/icons-material/DeleteForeverTwoTone';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
-import Navbar from '../../Components/Navbar';
+import Navbar from '../../Components/Navbar/Navbar';
 
 const CartComponent = ({ DataBase })=>{
 
     const fee = 40;
     const history = useHistory();
-    // const [userData, setUser]= useState('');
     const [saved, setSaved]= useState([]);
     const [products, setProduct] = useState([]);
     const [userQuanttity, setUserQuanttity] = useState(1);    
@@ -73,8 +72,8 @@ const CartComponent = ({ DataBase })=>{
 
 return (
     <Box sx={{ flexGrow: 1}}>
-        <Navbar user={user} page={'Cart'} />
-        <Grid container >
+        <Navbar page={'Cart'} />
+        <Grid container  id='CartCont' >
             {products.filter((search)=>{
                 if(saved.includes(search._id)){    
                 return search

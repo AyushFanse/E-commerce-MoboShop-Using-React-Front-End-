@@ -82,8 +82,8 @@
 @media (min-width: 768px) {
 #searchIconBar{
     display:flex;
-    justify-content: flex-start;
-    width:25%;
+    justify-content: space-around;
+    width:20%;
     background-color:#94c8fd28;    
     backdrop-filter: blur(15px);
     padding:5px 10px;
@@ -91,7 +91,7 @@
 }
 #searchIconOut{
     position:relative;
-    margin-right: 2px;
+    margin-bottom: -3px;
 }
 #searchField{
     border: none;
@@ -143,4 +143,19 @@
 .wave{
     width:22px;
     height:22px;
+}
+#loginOut{
+    display:flex;
+    flex-direction:column;
+    color: white;
+    padding:0;
+    width: 45px;
+}
+#loginIcon{
+    font-size:1.3rem;
+    color: white;
+}
+#login{
+    font-size:0.8rem;
+    font-weight:bold;
 }

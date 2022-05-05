@@ -3,13 +3,15 @@ import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import {IconButton,Button,Link,Grid,TextField,FormControl,InputLabel, Input,InputAdornment,Box} from '@mui/material';
+import {IconButton,Button,Link,Grid,TextField,FormControl,InputLabel,CircularProgress, Input,InputAdornment,Box} from '@mui/material';
 import { Visibility, AccountCircle, VisibilityOff, ManageAccounts, LockTwoTone } from '@mui/icons-material';
+import './auth.css';
 
 
 const LoginComponent = ({DataBase},props) => {
 const history = useHistory();
 const [email, setEmail] = useState('');
+const [loading, setLoading] = useState(false);
 const [password,setPassword] = useState('');
 const [Worning,setWorning] = useState('');
 const [showPassword,setShowPassword] = useState('');
@@ -28,6 +30,7 @@ const handleSubmit = async (e) => {
 e.preventDefault();
 let response = '';
     try{
+        setLoading(true)
         if( email==='' && password==='' ){ 
             setWorning({ status:'error', msg:'Please fill all the details..!!!' });      
             }else{
@@ -40,12 +43,13 @@ let response = '';
 
                 if(response.data.status === 'success'){
                     localStorage.setItem( 'token', response.data.userToken );
-                    history.replace('/home');
+                    history.replace('/');
                 }}
     } catch (err) {
         setWorning({status:'error', msg:err.response.data.msg});
         alert(err.response.data.msg);
     }
+    setLoading(false)
 }
 
 
@@ -113,8 +117,9 @@ return (
                         </Grid>
                         <Grid sx={{textAlign: 'center'}}>
                             <Button sx={{mt:4}} type="submit" variant="contained" disableElevation >
-                                Submit
+                                Login
                             </Button>
+                            {loading && ( <CircularProgress size={24} id='CircularProgress' /> )}
                         </Grid>
                         <Grid sx={{textAlign: 'center', mb:2, cursor: 'default'}}>
                             <p>Don&apos;t have account ? <Link onClick={() =>{history.replace('/signup')}} variant="body2" sx={{textDecoration:"none", cursor: 'pointer'}} >Sign-Up</Link></p>

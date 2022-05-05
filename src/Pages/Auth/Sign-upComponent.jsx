@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
-import {IconButton,Button,Grid,TextField,FormControl,InputLabel,Input,Link,InputAdornment,Box} from '@mui/material';
+import {IconButton,Button,Grid,TextField,FormControl,InputLabel,Input,Link,InputAdornment,CircularProgress,Box} from '@mui/material';
 import { Visibility, KeyboardBackspace, VisibilityOff, HowToReg } from '@mui/icons-material';
 
 const LoginComponent = ({DataBase},props) => {
@@ -11,6 +11,7 @@ const LoginComponent = ({DataBase},props) => {
 const [email, setEmail] = useState('');
 const [password,setPassword] = useState('');
 const [first_name,setFirstName] = useState('');
+const [loading, setLoading] = useState(false);
 const [last_name,setLastName] = useState('');
 const [address,setAddress] = useState('');
 const [username,setUsername] = useState('');
@@ -34,7 +35,8 @@ const handleSubmit = async (e) => {
 e.preventDefault();
 
 let response = '';           
-    try{               
+    try{            
+        setLoading(true)   
         if(first_name==='' && last_name==='' && username===''  && email==='' && address==='' && number==='' && password==='' ) {   
             setWorning({status:'error', msg:'Please fill all the details..!!!'})   
         }else{     
@@ -51,12 +53,13 @@ let response = '';
             setWorning(response.data);
 
             if(response.data.status==='success'){
-                props.history.push('/');   
+                props.history.push('/login');   
             }}
     } catch (err){
             setWorning({status:'error', msg:err.response.data.msg});
             alert(err.response.data.msg);
     }
+    setLoading(false);
 }
 
 //-------------------------------* VALIDATION FUNCTIONS *-------------------------------//
@@ -163,8 +166,9 @@ return (
                         <Button sx={{mt:2}} type="submit" variant="contained" disableElevation >
                             Create Account
                         </Button>
+                        {loading && ( <CircularProgress size={24} id='CircularProgress' /> )}
                         <Grid sx={{textAlign: 'center', mb:-2, cursor: 'default'}}>
-                            <p>Already have account ? <Link onClick={() =>{props.history.push('/')}} variant="body2" sx={{textDecoration:"none", cursor: 'pointer'}} >Login</Link></p>
+                            <p>Already have account ? <Link onClick={() =>{props.history.push('/login')}} variant="body2" sx={{textDecoration:"none", cursor: 'pointer'}} >Login</Link></p>
                         </Grid>                            
                     </Grid>
                 </form>

@@ -8,6 +8,7 @@ import Home from './Pages/Home/HomeComponent.jsx';
 import Cart from './Pages/Cart/CartComponent.jsx';
 import Profile from './Pages/Profile/ProfileComponent.jsx';
 import EditUser from './Pages/Profile/EditUser.jsx';
+import Error from './Pages/Error/Error.jsx';
 
 
 
@@ -17,13 +18,14 @@ const Routes = () => {
 
     return(
         <BrowserRouter>
-            <Switch>
-                <Route exact path="/"><Login DataBase={DataBase} /></Route>
-                <Route exact path="/signup"><Signup DataBase={DataBase} /></Route>                
-                <Route exact path='/home'><Home DataBase={DataBase} /></Route>
+            <Switch>               
+                <Route exact path='/'><Home DataBase={DataBase} /></Route>
+                <Route exact path="/login"><Login DataBase={DataBase} /></Route>
+                <Route exact path="/signup"><Signup DataBase={DataBase} /></Route> 
                 <Route exact path='/cart' ><Cart DataBase={DataBase} /></Route>    
                 <Route exact path='/profile' ><Profile DataBase={DataBase} /></Route>
                 <Route exact path='/profile/:userId' ><EditUser DataBase={DataBase} /></Route>
+                <Route exact path='*' ><Error /></Route>
             </Switch>
         </BrowserRouter>
     )

@@ -26,15 +26,15 @@ const CartComponent = ({ DataBase })=>{
         const user = decodedToken.user;
       
     useEffect(()=>{
-        
         if(decodedToken===null){
             history.push('/');
-            alert("Session Timeout Please Login Again...");
         }else{
-                if(decodedToken.exp*1000<=Date.now()){
+            if(decodedToken.exp*1000<=Date.now()){
+                localStorage.removeItem('token');
+                alert("Session Timeout Please Login Again...");
                 history.push('/');
-                }
             }
+        }
     },[decodedToken,history])
       
 

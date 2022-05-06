@@ -101,7 +101,7 @@ function Navbar({page, search, saved}) {
                     ?
                         (
                             <>
-                              <Badge badgeContent={saved.length} color="error">
+                              <Badge badgeContent={saved?.length} color="error">
                                 <ShoppingCart onClick={()=>{history.push('/cart');}}/>
                               </Badge>
                             </>

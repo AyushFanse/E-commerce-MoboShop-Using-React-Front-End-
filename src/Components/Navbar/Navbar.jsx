@@ -21,7 +21,7 @@ function Navbar({page, search, saved}) {
         if(decodedToken===null){
             setLogin(true);
         }
-    },[decodedToken])
+    },[decodedToken,login])
  
 //-------------------------------* NAVIGATION MENU STATE *-------------------------------//
     const handleOpenUserMenu = (event) => {
@@ -52,6 +52,8 @@ function Navbar({page, search, saved}) {
     const Logout = ()=>{
         localStorage.removeItem('token');
         alert('You have been logged out');
+        setAnchorElUser(null);
+        setLogin(false);
         history.push('/');
     };
   

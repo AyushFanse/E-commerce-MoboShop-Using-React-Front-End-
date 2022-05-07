@@ -1,0 +1,59 @@
+:root {
+    --theam: #1976d2;
+}
+
+#HomeCont {
+    margin-top: 75px;
+    transition: 1s all ease;
+}
+
+#homeCard {
+    width: 305px;
+    height: auto;
+    margin: 12px;
+    border-radius: 10px;
+    border: 1px solid #6b6b90;
+    border-bottom: 6px solid #6b6b90;
+    box-shadow: inset 0px -18px 28px rgb(8, 7, 14, 0.1),
+        inset 0px 8px 33px rgba(8, 7, 14, 0.2);
+
+}
+
+#CartCont {
+    margin: 0;
+    margin-top: 62px;
+    transition: 1s all ease;
+}
+
+@media (max-width: 768px) {
+    #HomeCont {
+        margin-top: 108px;
+        justify-content: center;
+    }
+
+    #CartCont {
+        margin-top: 55px;
+        justify-content: center;
+        transition: 1s all ease;
+    }
+}
+
+@media (max-width: 650px) {
+    #homeCardOut {
+        width: 100%;
+    }
+
+    #homeCard {
+        width: 100%;
+        margin: 12px 0;
+    }
+}
+
+#ErrorCont {
+    margin-top: 140px;
+    place-content: center;
+}
+
+#ErrorCont img {
+    width: 400px;
+}

@@ -1,0 +1,90 @@
+.viewProductBody {
+    margin-top: 75px;
+    height: auto;
+    min-height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fontstyle {
+    font-family: 'Montserrat';
+}
+
+.Image {
+    height: 400px;
+    width: 400px;
+    object-fit: contain;
+    transition: 2s all ease;
+}
+
+.imgBack {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    width: 400px;
+    height: auto;
+    border: 1px solid #6b6b90;
+    border-bottom: 6px solid #6b6b90;
+    transition: 2s all ease;
+    box-shadow: inset 0px -15px 15px rgb(8, 7, 14, 0.1),
+        inset 0px 15px 15px rgba(8, 7, 14, 0.2);
+}
+
+#priceVal {
+    font-size: 31px;
+}
+
+#price {
+    font-size: 25px;
+}
+
+.displayItoms {
+    margin-top: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#img {
+    min-height: 200px;
+    max-height: 350px;
+    height: 100%;
+    border-radius: 27px;
+}
+
+#Details {
+    padding: 0px 30px;
+}
+
+.fontSize1 {
+    font-size: 33px;
+    font-weight: 600;
+}
+
+.processor {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .Image {
+        width: auto;
+        max-height: 300px;
+        max-width: 100%;
+        transition: 2s all ease;
+    }
+
+    .imgBack {
+        width: auto;
+        max-width: 100%;
+        transition: 2s all ease;
+    }
+
+    #Details {
+        margin: 7% 30px;
+    }
+
+}

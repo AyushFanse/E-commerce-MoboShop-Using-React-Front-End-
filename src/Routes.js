@@ -9,6 +9,7 @@ import Cart from './Pages/Cart/CartComponent.jsx';
 import Profile from './Pages/Profile/ProfileComponent.jsx';
 import EditUser from './Pages/Profile/EditUser.jsx';
 import Error from './Pages/Error/Error.jsx';
+import ViewPro from './Pages/ViewProduct/ViewPro';
 
 
 
@@ -16,13 +17,14 @@ const Routes = () => {
 
     const DataBase = 'https://e-commerce-mobo-website.herokuapp.com';
 
-    return(
+    return (
         <BrowserRouter>
-            <Switch>               
+            <Switch>
                 <Route exact path='/'><Home DataBase={DataBase} /></Route>
                 <Route exact path="/login"><Login DataBase={DataBase} /></Route>
-                <Route exact path="/signup"><Signup DataBase={DataBase} /></Route> 
-                <Route exact path='/cart' ><Cart DataBase={DataBase} /></Route>    
+                <Route exact path="/signup"><Signup DataBase={DataBase} /></Route>
+                <Route exact path='/cart' ><Cart DataBase={DataBase} /></Route>
+                <Route exact path='/product/:productId' ><ViewPro DataBase={DataBase} /></Route>
                 <Route exact path='/profile' ><Profile DataBase={DataBase} /></Route>
                 <Route exact path='/profile/:userId' ><EditUser DataBase={DataBase} /></Route>
                 <Route exact path='*' ><Error /></Route>

@@ -13,13 +13,35 @@ const CardItems = ({ product, DataBase, saved, Change }) => {
     const history = useHistory();
 
     const Save = ((P, U, L) => {
-        Change('Changed');
-        SaveProduct(P, U, L)
+
+        if (decodedToken === null) {
+            history.push('/login');
+        } else {
+            if (decodedToken.exp * 1000 <= Date.now()) {
+                localStorage.removeItem('token');
+                alert("Session Timeout Please Login Again...");
+                history.push('/login');
+            } else {
+                Change('Changed');
+                SaveProduct(P, U, L)
+            }
+        }
     })
 
     const Unsave = ((P, U, L) => {
-        Change('Changed');
-        DeleteSavedProduct(P, U, L)
+
+        if (decodedToken === null) {
+            history.push('/login');
+        } else {
+            if (decodedToken.exp * 1000 <= Date.now()) {
+                localStorage.removeItem('token');
+                alert("Session Timeout Please Login Again...");
+                history.push('/login');
+            } else {
+                Change('Changed');
+                DeleteSavedProduct(P, U, L)
+            }
+        }
     })
 
     return (
@@ -58,7 +80,7 @@ const CardItems = ({ product, DataBase, saved, Change }) => {
                                     variant="outlined"
                                     size="small"
                                     style={{ border: '1px solid #fff', borderBottom: '1px solid  var(--cl)', borderRadius: '10px' }}
-                                    onClick={() => { Unsave(product._id, user._id, DataBase) }}
+                                    onClick={() => { Unsave(product._id, user?._id, DataBase) }}
                                 >
                                     <RemoveShoppingCart sx={{ color: 'var(--cl)' }} />
                                 </Button>
@@ -67,7 +89,7 @@ const CardItems = ({ product, DataBase, saved, Change }) => {
                                     variant="outlined"
                                     size="small"
                                     sx={{ border: '1px solid #fff', borderBottom: '1px solid var(--theam)', borderRadius: '10px' }}
-                                    onClick={() => { Save(product._id, user._id, DataBase) }}
+                                    onClick={() => { Save(product._id, user?._id, DataBase) }}
                                 >
                                     <AddShoppingCart />
                                 </Button>

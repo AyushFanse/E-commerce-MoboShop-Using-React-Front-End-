@@ -1,8 +1,8 @@
 import { Grid, Box, Button, CardActions } from '@mui/material';
 import { SaveProduct, DeleteSavedProduct, TabTitle } from '../../Components/Common/CommonFun';
 import React, { useEffect, useState, useRef } from 'react';
+import { useHistory, useParams } from "react-router-dom";
 import Navbar from '../../Components/Navbar/Navbar';
-import { useParams } from "react-router-dom";
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import './viewPro.css';
@@ -13,6 +13,7 @@ const ViewPro = ({ DataBase }) => {
     const [saved, setSaved] = useState([]);
     const [product, setProduct] = useState([]);
     const [changed, setChange] = useState('');
+    const history = useHistory();
     const { productId } = useParams();
     const FatchRef = useRef();
     const localToken = localStorage.getItem('token');
@@ -48,19 +49,39 @@ const ViewPro = ({ DataBase }) => {
         }
         setChange('');
     }
-    console.log(product)
-    console.log(saved)
 
     FatchRef.current = Fatch;
+ 
     const Save = ((P, U, L) => {
-        setChange('Changed');
-        SaveProduct(P, U, L)
+
+        if (decodedToken === null) {
+            history.push('/login');
+        } else {
+            if (decodedToken.exp * 1000 <= Date.now()) {
+                localStorage.removeItem('token');
+                alert("Session Timeout Please Login Again...");
+                history.push('/login');
+            } else {
+                SaveProduct(P, U, L)
+            }
+        }
     })
 
     const Unsave = ((P, U, L) => {
-        setChange('Changed');
-        DeleteSavedProduct(P, U, L)
+
+        if (decodedToken === null) {
+            history.push('/login');
+        } else {
+            if (decodedToken.exp * 1000 <= Date.now()) {
+                localStorage.removeItem('token');
+                alert("Session Timeout Please Login Again...");
+                history.push('/login');
+            } else {
+                DeleteSavedProduct(P, U, L)
+            }
+        }
     })
+
     return (
         <>
             <Navbar page={'Product'} />
@@ -89,7 +110,7 @@ const ViewPro = ({ DataBase }) => {
                                             variant="outlined"
                                             size="small"
                                             style={{ border: '1px solid #fff', borderBottom: '1px solid  var(--cl)', borderRadius: '10px' }}
-                                            onClick={() => { Unsave(product._id, user._id, DataBase) }}
+                                            onClick={() => { Unsave(product._id, user?._id, DataBase) }}
                                         >
                                             REMOVE
                                         </Button>
@@ -98,7 +119,7 @@ const ViewPro = ({ DataBase }) => {
                                             variant="outlined"
                                             size="small"
                                             sx={{ border: '1px solid #fff', borderBottom: '1px solid var(--theam)', borderRadius: '10px' }}
-                                            onClick={() => { Save(product._id, user._id, DataBase) }}
+                                            onClick={() => { Save(product._id, user?._id, DataBase) }}
                                         >
                                             ADD TO CART
                                         </Button>

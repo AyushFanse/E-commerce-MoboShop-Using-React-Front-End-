@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+//-------------------------------* WEBSITE TITLE *-------------------------------//
+
 export const TabTitle = ((newTitel) => {
     return (document.title = newTitel)
 })

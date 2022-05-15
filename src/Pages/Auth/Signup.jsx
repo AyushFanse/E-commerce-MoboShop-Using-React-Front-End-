@@ -56,6 +56,7 @@ const LoginComponent = ({ DataBase }, props) => {
                 }
             } else {
                 setWorning({ status: 'error', msg: 'Please fill all the details..!!!' })
+                setLoading(false);
             }
         } catch (err) {
 

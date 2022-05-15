@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-import { IconButton, Button, Link, Grid, TextField, FormControl, InputLabel, CircularProgress, Input, InputAdornment, Box } from '@mui/material';
+import { Alert, Stack, IconButton, Button, Link, Grid, TextField, FormControl, InputLabel, CircularProgress, Input, InputAdornment, Box } from '@mui/material';
 import { Visibility, AccountCircle, VisibilityOff, ManageAccounts, LockTwoTone } from '@mui/icons-material';
 import './auth.css';
 import { TabTitle } from '../../Components/Common/CommonFun';
@@ -12,9 +10,8 @@ import { TabTitle } from '../../Components/Common/CommonFun';
 const LoginComponent = ({ DataBase }, props) => {
 
     const history = useHistory();
-    const [email, setEmail] = useState('');
+    const contactForm = useRef();
     const [loading, setLoading] = useState(false);
-    const [password, setPassword] = useState('');
     const [Worning, setWorning] = useState('');
     const [showPassword, setShowPassword] = useState('');
     TabTitle(`MOBO SHOP | Login`)
@@ -31,27 +28,36 @@ const LoginComponent = ({ DataBase }, props) => {
     const handleSubmit = async (e) => {
 
         e.preventDefault();
-        let response = '';
+        const data = contactForm.current;
         try {
             setLoading(true)
-            if (email === '' && password === '') {
-                setWorning({ status: 'error', msg: 'Please fill all the details..!!!' });
-            } else {
-                response = await axios.post(`${DataBase}/register/login`, {
-                    password: password.value,
-                    email: email.value
+            if (data.email.value && data.password.value) {
+                let response = await axios.post(`${DataBase}/register/login`, {
+                    email: data.email.value,
+                    password: data.password.value
                 })
 
-                setWorning(response.data);
-
-                if (response.data.status === 'success') {
+                if (response.status === 200) {
                     localStorage.setItem('token', response.data.userToken);
                     history.replace('/');
                 }
+
+                if (response.status === 400) {
+                    setWorning({ status: 'error', msg: response.data.msg })
+                }
+            } else {
+                setWorning({ status: 'error', msg: 'Please fill all the details..!!!' });
             }
         } catch (err) {
+
+            if (!err.response) {
+                setWorning({ status: 'error', msg: "Your Are offline" })
+                setLoading(false)
+                return;
+            }
+
             setWorning({ status: 'error', msg: err.response.data.msg });
-            alert(err.response.data.msg);
+            setLoading(false)
         }
         setLoading(false)
     }
@@ -64,8 +70,8 @@ const LoginComponent = ({ DataBase }, props) => {
             </a>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Grid style={{ padding: "20px", background: '#c8e4fb', borderRadius: '5px', borderColor: 'primary', margin: "100px auto", boxShadow: '0px 0px 15px -6px rgba(0, 0, 0, 0.75)' }} sx={{ borderBottom: 5, borderColor: 'primary.main' }}>
-                    <h2 style={{ textAlign: 'center', cursor: 'default', display: 'flex', justifyContent: 'space-evenly', padding: '0px 100px' }}>
-                        <LockTwoTone />
+                    <h2 style={{ textAlign: 'center', cursor: 'default', fontWeight: 600, display: 'flex', justifyContent: 'space-evenly', padding: '0px 100px' }}>
+                        <LockTwoTone style={{ fontSize: "2rem", marginTop: '-3px' }} />
                         Login
                     </h2>
                     {
@@ -78,13 +84,12 @@ const LoginComponent = ({ DataBase }, props) => {
                             null
                     }
                     <br />
-                    <form onSubmit={(e) => handleSubmit(e)}>
+                    <form ref={contactForm} onSubmit={(e) => handleSubmit(e)}>
                         <Box sx={{ mt: -2, '& .MuiTextField-root': { m: 1.8, width: 293 } }}>
                             <TextField
                                 id="input-with-icon-textfield"
                                 label="Email"
-                                value={props.email}
-                                onChange={(e) => { setEmail(e.currentTarget) }}
+                                name="email"
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="start">
@@ -102,9 +107,8 @@ const LoginComponent = ({ DataBase }, props) => {
                                 <Input
                                     id="standard-adornment-password"
                                     type={showPassword ? 'text' : 'password'}
-                                    value={props.password}
                                     sx={{ width: 293 }}
-                                    onChange={(e) => { setPassword(e.currentTarget) }}
+                                    name="password"
                                     endAdornment={
                                         <InputAdornment position="end">
                                             <IconButton
@@ -126,7 +130,7 @@ const LoginComponent = ({ DataBase }, props) => {
                             {loading && (<CircularProgress size={24} id='CircularProgress' />)}
                         </Grid>
                         <Grid sx={{ textAlign: 'center', mb: 2, cursor: 'default' }}>
-                            <p>Don&apos;t have account ? <Link onClick={() => { history.replace('/signup') }} variant="body2" sx={{ textDecoration: "none", cursor: 'pointer' }} >Sign-Up</Link></p>
+                            <p>Don&apos;t have account ? <Link onClick={() => { history.replace('/signup') }} variant="body2" sx={{ textDecoration: "none", cursor: 'pointer' }} >Sign-up</Link></p>
                         </Grid>
                     </form>
                 </Grid>

@@ -1,24 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-import { IconButton, Button, Grid, TextField, FormControl, InputLabel, Input, Link, InputAdornment, CircularProgress, Box } from '@mui/material';
+import { Alert, Stack, IconButton, Button, Grid, TextField, FormControl, InputLabel, Input, Link, InputAdornment, CircularProgress, Box } from '@mui/material';
 import { Visibility, KeyboardBackspace, VisibilityOff, HowToReg } from '@mui/icons-material';
 import { TabTitle } from '../../Components/Common/CommonFun';
 
 const LoginComponent = ({ DataBase }, props) => {
 
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [first_name, setFirstName] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [last_name, setLastName] = useState('');
-    const [address, setAddress] = useState('');
-    const [username, setUsername] = useState('');
-    const [number, setNumber] = useState('');
     const [showPassword, setShowPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const [Worning, setWorning] = useState('');
+    const history = useHistory();
+    const contactForm = useRef();
     TabTitle(`MOBO SHOP | Sign-Up`)
 
     //-------------------------------* PASSWORD VISIBILITY FUNCTIONS *-------------------------------//
@@ -35,45 +29,60 @@ const LoginComponent = ({ DataBase }, props) => {
     const handleSubmit = async (e) => {
 
         e.preventDefault();
+        const data = contactForm.current;
 
-        let response = '';
         try {
             setLoading(true)
-            if (first_name === '' && last_name === '' && username === '' && email === '' && address === '' && number === '' && password === '') {
-                setWorning({ status: 'error', msg: 'Please fill all the details..!!!' })
-            } else {
-                response = await axios.post(`${DataBase}/register/registerUser`, {
-                    username: username.value,
-                    first_name: first_name.value,
-                    last_name: last_name.value,
-                    email: email.value,
-                    address: address.value,
-                    number: number.value,
-                    password: password.value
+            if (data.first_name.value && data.last_name.value && data.username.value && data.email.value && data.address.value && data.number.value && data.password.value) {
+
+                let response = await axios.post(`${DataBase}/register/registerUser`, {
+
+                    first_name: data.first_name.value,
+                    last_name: data.last_name.value,
+                    username: data.username.value,
+                    address: data.address.value,
+                    number: data.number.value,
+                    email: data.email.value,
+                    password: data.password.value
                 })
 
-                setWorning(response.data);
-
-                if (response.data.status === 'success') {
-                    props.history.push('/login');
+                if (response.status === 201) {
+                    history.push('/login');
+                    alert("You have successfully created your account...");
                 }
+
+                if (response.status === 400) {
+                    setWorning({ status: 'error', msg: response.data.msg })
+                }
+            } else {
+                setWorning({ status: 'error', msg: 'Please fill all the details..!!!' })
             }
         } catch (err) {
+
+            if (!err.response) {
+                setWorning({ status: 'error', msg: "Your Are offline" })
+                setLoading(false)
+                return;
+            }
+
             setWorning({ status: 'error', msg: err.response.data.msg });
-            alert(err.response.data.msg);
+            setLoading(false);
         }
-        setLoading(false);
+        setLoading(false)
     }
 
     //-------------------------------* VALIDATION FUNCTIONS *-------------------------------//
     return (
         <>
-            <IconButton onClick={() => { props.history.goBack() }} edge="start" color="inherit" aria-label="menu" sx={{ ml: 2 }}>
+            <IconButton onClick={() => { history.push('/login') }} edge="start" color="inherit" aria-label="menu" sx={{ ml: 2 }}>
                 <KeyboardBackspace />
             </IconButton>
             <Box sx={{ '& .MuiTextField-root': { mt: 2 }, display: 'flex', justifyContent: 'center' }}>
                 <Grid style={{ padding: "20px", background: '#c8e4fb', width: '377px', borderRadius: '5px', margin: "20px auto", boxShadow: '0px 0px 15px -6px rgba(0, 0, 0, 0.75)' }} sx={{ borderBottom: 5, borderColor: 'primary.main' }}>
-                    <h2 style={{ alignItems: 'center', cursor: 'default', display: 'flex', justifyContent: 'space-evenly', padding: '0px 100px' }}><HowToReg /> Signup</h2>
+                    <h2 style={{ alignItems: 'center', cursor: 'default', fontWeight: 600, display: 'flex', justifyContent: 'space-evenly', padding: '0px 100px' }}>
+                        <HowToReg style={{ fontSize: "2rem", marginTop: '-3px' }} />
+                        Signup
+                    </h2>
                     {
                         Worning?.status === 'error'
                             ?
@@ -83,7 +92,7 @@ const LoginComponent = ({ DataBase }, props) => {
                             :
                             null
                     }
-                    <form style={{ textAlign: 'center' }} onSubmit={(e) => handleSubmit(e)}>
+                    <form ref={contactForm} style={{ textAlign: 'center' }} onSubmit={(e) => handleSubmit(e)}>
                         <Box sx={{ '& .MuiTextField-root': { m: 1.8, width: '11.2ch' } }}>
                             <TextField
                                 id="standard"
@@ -91,16 +100,14 @@ const LoginComponent = ({ DataBase }, props) => {
                                 size="small"
                                 variant="standard"
                                 aria-required="true"
-                                value={props.first_name}
-                                onChange={(e) => { setFirstName(e.currentTarget) }}
+                                name="first_name"
                             />
                             <TextField
                                 id="standard"
                                 label="Last-Name"
                                 size="small"
                                 variant="standard"
-                                value={props.last_name}
-                                onChange={(e) => { setLastName(e.currentTarget) }}
+                                name="last_name"
                             />
                         </Box>
                         <Box sx={{ mt: -2, '& .MuiTextField-root': { m: 1.8, width: 293 } }}>
@@ -109,8 +116,7 @@ const LoginComponent = ({ DataBase }, props) => {
                                 label="Username"
                                 size="small"
                                 variant="standard"
-                                value={props.username}
-                                onChange={(e) => { setUsername(e.currentTarget) }}
+                                name="username"
                             />
                         </Box>
                         <Box sx={{ mt: -2, '& .MuiTextField-root': { m: 1.8, width: 293 } }}>
@@ -119,8 +125,7 @@ const LoginComponent = ({ DataBase }, props) => {
                                 label="Email"
                                 size="small"
                                 variant="standard"
-                                value={props.email}
-                                onChange={(e) => { setEmail(e.currentTarget) }}
+                                name="email"
                             />
                         </Box>
                         <Box sx={{ mt: -2, '& .MuiTextField-root': { m: 1.8, width: 293 } }}>
@@ -129,8 +134,7 @@ const LoginComponent = ({ DataBase }, props) => {
                                 label="Number"
                                 size="small"
                                 variant="standard"
-                                value={props.number}
-                                onChange={(e) => { setNumber(e.currentTarget) }}
+                                name="number"
                             />
                         </Box>
                         <FormControl sx={{ '& .MuiTextField-root': { m: 0 } }}>
@@ -138,10 +142,9 @@ const LoginComponent = ({ DataBase }, props) => {
                             <Input
                                 id="standard-adornment-password"
                                 type={showPassword ? 'text' : 'password'}
-                                value={props.password}
+                                name="password"
                                 size="small"
                                 sx={{ width: 293 }}
-                                onChange={(e) => { setPassword(e.currentTarget) }}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton
@@ -161,8 +164,7 @@ const LoginComponent = ({ DataBase }, props) => {
                                 label="Address"
                                 size="small"
                                 variant="standard"
-                                value={props.address}
-                                onChange={(e) => { setAddress(e.currentTarget) }}
+                                name="address"
                             />
                         </Box>
                         <Grid sx={{ textAlign: 'center' }}>
@@ -171,7 +173,7 @@ const LoginComponent = ({ DataBase }, props) => {
                             </Button>
                             {loading && (<CircularProgress size={24} id='CircularProgress' />)}
                             <Grid sx={{ textAlign: 'center', mb: -2, cursor: 'default' }}>
-                                <p>Already have account ? <Link onClick={() => { props.history.push('/login') }} variant="body2" sx={{ textDecoration: "none", cursor: 'pointer' }} >Login</Link></p>
+                                <p>Already have account ? <Link onClick={() => { history.push('/login') }} variant="body2" sx={{ textDecoration: "none", cursor: 'pointer' }} >Login</Link></p>
                             </Grid>
                         </Grid>
                     </form>

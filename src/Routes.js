@@ -2,13 +2,13 @@ import React from 'react';
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 
 //-------------------------------* PAGES *-------------------------------//
-import Login from './Pages/Auth/LoginComponent.jsx';
-import Signup from './Pages/Auth/Sign-upComponent.jsx';
-import Home from './Pages/Home/HomeComponent.jsx';
-import Cart from './Pages/Cart/CartComponent.jsx';
-import Profile from './Pages/Profile/ProfileComponent.jsx';
-import EditUser from './Pages/Profile/EditUser.jsx';
-import Error from './Pages/Error/Error.jsx';
+import Login from './Pages/Auth/Login';
+import Signup from './Pages/Auth/Signup';
+import Home from './Pages/Home/Home';
+import Cart from './Pages/Cart/Cart';
+import Profile from './Pages/Profile/Profile';
+import EditUser from './Pages/Profile/EditUser';
+import Error from './Pages/Error/Error';
 import ViewPro from './Pages/ViewProduct/ViewPro';
 
 

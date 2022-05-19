@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Skeleton, Stack } from '@mui/material';
 import Navbar from '../../Components/Navbar/Navbar';
 import CardItems from '../../Components/CardData/CardItems';
 import { TabTitle } from '../../Components/Common/CommonFun';
@@ -11,13 +11,11 @@ const ProductComponent = ({ DataBase }) => {
 
   const [saved, setSaved] = useState([]);
   const [searches, setSearch] = useState('');
-  const [products, setProduct] = useState([]);
+  const [products, setProduct] = useState(null);
   const [changed, setChange] = useState('');
   const FatchRef = useRef();
   const localToken = localStorage.getItem('token');
   const decodedToken = jwt.decode(localToken);
-  const user = decodedToken?.user;
-
   TabTitle('MOBO SHOP | Home')
 
   useEffect(() => {
@@ -31,8 +29,8 @@ const ProductComponent = ({ DataBase }) => {
       })
     setProduct(response.data.sort((a, b) => { return cal(a.createdAt) > cal(b.createdAt) ? 1 : -1 }));
 
-    if (user) {
-      let responseUsers = await axios.get(`${DataBase}/users/getuser/${user?._id}`,
+    if (decodedToken) {
+      let responseUsers = await axios.get(`${DataBase}/users/getuser/${decodedToken.user._id}`,
         {
           headers: { token: localToken }
         })
@@ -52,15 +50,29 @@ const ProductComponent = ({ DataBase }) => {
     <Box>
       <Navbar saved={saved} page={'Moboshop'} search={setSearch} />
       <Grid container id='HomeCont' >
-        {products.filter((search) => {
-          if (searches === "") {
-            return search
-          } else if (search.productName.toLowerCase().includes(searches) || search.processor.toLowerCase().includes(searches)) {
-            return search
-          } return false;
-        }).map(product => (
-          <CardItems product={product} Change={setChange} DataBase={DataBase} saved={saved} item key={product._id} />
-        ))}
+        {
+          products
+            ?
+            (
+              products.filter((search) => {
+                if (searches === "") {
+                  return search
+                } else if (search.productName.toLowerCase().includes(searches) || search.processor.toLowerCase().includes(searches)) {
+                  return search
+                } return false;
+              }).map(product => (
+                <CardItems product={product} Change={setChange} DataBase={DataBase} saved={saved} item key={product._id} />
+              ))
+            )
+            :
+            (
+              Array.from(new Array(20)).map((n,i) => (
+                <Stack spacing={1} id='skeletonCard' key={i}>
+                  <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
+                </Stack>
+              ))
+            )
+        }
       </Grid>
     </Box>
   )

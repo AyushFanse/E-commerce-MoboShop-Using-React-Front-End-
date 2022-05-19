@@ -13,7 +13,6 @@ function Navbar({ page, search, saved }) {
     const history = useHistory();
     const localToken = localStorage.getItem('token');
     const decodedToken = jwt.decode(localToken);
-    const user = decodedToken?.user;
 
 
     //-------------------------------* USE-EFFECT FUNCTION *-------------------------------//
@@ -103,7 +102,7 @@ function Navbar({ page, search, saved }) {
                             ?
                             (
                                 <>
-                                    <Badge badgeContent={saved?.length} color="error">
+                                    <Badge badgeContent={saved.length} color="error">
                                         <ShoppingCart onClick={() => { history.push('/cart'); }} />
                                     </Badge>
                                 </>
@@ -150,7 +149,7 @@ function Navbar({ page, search, saved }) {
                                     onClose={handleCloseUserMenu}
                                 >
                                     <MenuItem id="menuItemsOut">
-                                        <Typography id="menuItemsUser" sx={{ fontFamily: 'Montserrat' }} > Hi {user ? user.first_name : 'New User'} !&nbsp;<img className='wave' src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" alt='' /></Typography>
+                                        <Typography id="menuItemsUser" sx={{ fontFamily: 'Montserrat' }} > Hi {decodedToken ? decodedToken.user.first_name : 'New User'} !&nbsp;<img className='wave' src="https://raw.githubusercontent.com/MartinHeinz/MartinHeinz/master/wave.gif" alt='' /></Typography>
                                     </MenuItem>
                                     {
                                         page === 'Moboshop'

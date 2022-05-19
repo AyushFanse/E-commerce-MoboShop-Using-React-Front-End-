@@ -18,7 +18,6 @@ const ViewPro = ({ DataBase }) => {
     const FatchRef = useRef();
     const localToken = localStorage.getItem('token');
     const decodedToken = jwt.decode(localToken);
-    const user = decodedToken?.user;
     const formatter = new Intl.NumberFormat("en-US",
         {
             style: "currency",
@@ -40,8 +39,8 @@ const ViewPro = ({ DataBase }) => {
             })
         setProduct(response.data);
 
-        if (user) {
-            let responseUsers = await axios.get(`${DataBase}/users/getuser/${user?._id}`,
+        if (decodedToken) {
+            let responseUsers = await axios.get(`${DataBase}/users/getuser/${decodedToken.user._id}`,
                 {
                     headers: { token: localToken }
                 })
@@ -104,13 +103,13 @@ const ViewPro = ({ DataBase }) => {
                         <Box className="d-grid gap-2 d-md-block">
                             <CardActions sx={{ disply: 'flax', justifyContent: 'center', mt: '2rem' }}>
                                 {
-                                    saved?.includes(product._id)
+                                    saved.includes(product._id)
                                         ?
                                         <Button
                                             variant="outlined"
                                             size="small"
                                             style={{ border: '1px solid #fff', borderBottom: '1px solid  var(--cl)', borderRadius: '10px' }}
-                                            onClick={() => { Unsave(product._id, user?._id, DataBase) }}
+                                            onClick={() => { Unsave(product._id, decodedToken.user._id, DataBase) }}
                                         >
                                             REMOVE
                                         </Button>
@@ -119,7 +118,7 @@ const ViewPro = ({ DataBase }) => {
                                             variant="outlined"
                                             size="small"
                                             sx={{ border: '1px solid #fff', borderBottom: '1px solid var(--theam)', borderRadius: '10px' }}
-                                            onClick={() => { Save(product._id, user?._id, DataBase) }}
+                                            onClick={() => { Save(product._id, decodedToken.user._id, DataBase) }}
                                         >
                                             ADD TO CART
                                         </Button>

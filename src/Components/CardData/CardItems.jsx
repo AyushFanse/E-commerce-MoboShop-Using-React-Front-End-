@@ -9,7 +9,6 @@ const CardItems = ({ product, DataBase, saved, Change }) => {
 
     const localToken = localStorage.getItem('token');
     const decodedToken = jwt.decode(localToken);
-    const user = decodedToken?.user;
     const history = useHistory();
 
     const Save = ((P, U, L) => {
@@ -74,13 +73,13 @@ const CardItems = ({ product, DataBase, saved, Change }) => {
                             View
                         </Button>
                         {
-                            saved?.includes(product._id)
+                            saved.includes(product._id)
                                 ?
                                 <Button
                                     variant="outlined"
                                     size="small"
                                     style={{ border: '1px solid #fff', borderBottom: '1px solid  var(--cl)', borderRadius: '10px' }}
-                                    onClick={() => { Unsave(product._id, user?._id, DataBase) }}
+                                    onClick={() => { Unsave(product._id, decodedToken.user._id, DataBase) }}
                                 >
                                     <RemoveShoppingCart sx={{ color: 'var(--cl)' }} />
                                 </Button>
@@ -89,7 +88,7 @@ const CardItems = ({ product, DataBase, saved, Change }) => {
                                     variant="outlined"
                                     size="small"
                                     sx={{ border: '1px solid #fff', borderBottom: '1px solid var(--theam)', borderRadius: '10px' }}
-                                    onClick={() => { Save(product._id, user?._id, DataBase) }}
+                                    onClick={() => { Save(product._id, decodedToken.user._id, DataBase) }}
                                 >
                                     <AddShoppingCart />
                                 </Button>

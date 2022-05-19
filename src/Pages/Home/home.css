@@ -15,8 +15,15 @@
     border: 1px solid #6b6b90;
     border-bottom: 6px solid #6b6b90;
     box-shadow: inset 0px -18px 28px rgb(8, 7, 14, 0.1),
-        inset 0px 8px 33px rgba(8, 7, 14, 0.2);
+                inset 0px 8px 33px rgba(8, 7, 14, 0.2);
+}
 
+#skeletonCard {
+    width: 305px;
+    height: 295px;
+    margin: 12px;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 #CartCont {

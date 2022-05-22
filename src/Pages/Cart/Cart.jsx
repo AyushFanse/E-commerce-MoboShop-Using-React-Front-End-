@@ -7,6 +7,7 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import Navbar from '../../Components/Navbar/Navbar';
 import { TabTitle } from '../../Components/Common/CommonFun';
+import "./cart.css";
 
 const CartComponent = ({ DataBase }) => {
 

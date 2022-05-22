@@ -1,0 +1,41 @@
+* {
+    font-family: 'Montserrat';
+}
+
+:root {
+    --theam: #1976d2;
+}
+
+/*------------------------* Buy Button *------------------------*/
+.buy_out {
+    display: flex;
+    justify-content: space-around;
+}
+
+.buy_now {
+    width: 160px;
+    border: 2px solid #1976d2;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.buy_now:hover {
+    border: 1px solid #1976d2;
+}
+
+.buy_now a {
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+}
+
+.buy_now a {
+    text-decoration: none;
+    height: 100%;
+    width: 100%;
+}
+
+.buyButtons {
+    display: inline-flex;
+    align-items: center;
+}

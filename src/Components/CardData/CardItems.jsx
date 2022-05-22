@@ -88,7 +88,7 @@ const CardItems = ({ product, DataBase, saved, Change }) => {
                                     variant="outlined"
                                     size="small"
                                     sx={{ border: '1px solid #fff', borderBottom: '1px solid var(--theam)', borderRadius: '10px' }}
-                                    onClick={() => { Save(product._id, decodedToken.user._id, DataBase) }}
+                                    onClick={() => { decodedToken ? Save(product._id, decodedToken.user._id, DataBase) : history.push('/login') }}
                                 >
                                     <AddShoppingCart />
                                 </Button>

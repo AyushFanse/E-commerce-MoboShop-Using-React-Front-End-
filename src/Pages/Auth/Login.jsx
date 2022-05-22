@@ -7,7 +7,7 @@ import './auth.css';
 import { TabTitle } from '../../Components/Common/CommonFun';
 
 
-const LoginComponent = ({ DataBase }, props) => {
+const LoginComponent = ({ DataBase }) => {
 
     const history = useHistory();
     const contactForm = useRef();
@@ -39,7 +39,7 @@ const LoginComponent = ({ DataBase }, props) => {
 
                 if (response.status === 200) {
                     localStorage.setItem('token', response.data.userToken);
-                    history.replace('/');
+                    history.push('/');
                 }
 
                 if (response.status === 400) {
@@ -130,7 +130,7 @@ const LoginComponent = ({ DataBase }, props) => {
                             {loading && (<CircularProgress size={24} id='CircularProgress' />)}
                         </Grid>
                         <Grid sx={{ textAlign: 'center', mb: 2, cursor: 'default' }}>
-                            <p>Don&apos;t have account ? <Link onClick={() => { history.replace('/signup') }} variant="body2" sx={{ textDecoration: "none", cursor: 'pointer' }} >Sign-up</Link></p>
+                            <p>Don&apos;t have account ? <Link onClick={() => { history.push('/signup') }} variant="body2" sx={{ textDecoration: "none", cursor: 'pointer' }} >Sign-up</Link></p>
                         </Grid>
                     </form>
                 </Grid>

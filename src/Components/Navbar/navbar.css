@@ -1,9 +1,3 @@
-:root {
-    --theam: #1976d2;
-    --login: #fff;
-    --cl: #ffa600;
-}
-
 #textFonts {
     font-family: 'Montserrat';
 }
@@ -14,14 +8,14 @@
 }
 
 #navBar {
-    background: var(--theam);
+    background: var(--theme);
     height: 60px;
     text-transform: uppercase;
 }
 
 /*-------------------------------------------------* Menu Bar *------------------------------------------------*/
 
-.manuOut {
+.menuOut {
     margin-top: 46px;
 }
 
@@ -41,7 +35,7 @@
 
 #menuItemsOut:hover #menuItems {
     opacity: 1;
-    color: var(--theam);
+    color: var(--theme);
 }
 
 #menuItemsUser {
@@ -60,15 +54,15 @@
 
 #menuItemsOut:hover #menuItemsIcon {
     opacity: 1;
-    color: var(--theam);
+    color: var(--theme);
 }
 
 #appbar {
     position: fixed;
-    background: var(--theam);
+    background: var(--theme);
     cursor: default;
     text-transform: uppercase;
-    box-shadow: 4px 0px 10px var(--theam);
+    box-shadow: 4px 0px 10px var(--theme);
 }
 
 #background {
@@ -172,7 +166,6 @@
 #homeBack {
     backdrop-filter: blur(1px);
     margin-top: 50px;
-    scroll-behavior: smooth;
 }
 
 .wave {

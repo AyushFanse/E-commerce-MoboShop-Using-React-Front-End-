@@ -35,7 +35,7 @@ const LoginComponent = ({ DataBase }, props) => {
             setLoading(true)
             if (data.first_name.value && data.last_name.value && data.username.value && data.email.value && data.address.value && data.number.value && data.password.value) {
 
-                let response = await axios.post(`${DataBase}/register/registerUser`, {
+                let response = await axios.post(`${DataBase}/register/registeruser`, {
 
                     first_name: data.first_name.value,
                     last_name: data.last_name.value,

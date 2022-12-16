@@ -129,8 +129,19 @@ const LoginComponent = ({ DataBase }) => {
                             </Button>
                             {loading && (<CircularProgress size={24} id='CircularProgress' />)}
                         </Grid>
-                        <Grid sx={{ textAlign: 'center', mb: 2, cursor: 'default' }}>
-                            <p>Don&apos;t have account ? <Link onClick={() => { history.push('/signup') }} variant="body2" sx={{ textDecoration: "none", cursor: 'pointer' }} >Sign-up</Link></p>
+                        <Grid sx={{ textAlign: 'end', mt: 1, mr:2, cursor: 'default' }}>
+                            <span id="switchLogin" >
+                                <Link 
+                                    onClick={() => { history.push('/forgotpassword') }} 
+                                    variant="body2" 
+                                    sx={{ textDecoration: "none", cursor: 'pointer' }}
+                                >
+                                    Forgot Password ?
+                                </Link>
+                            </span>
+                        </Grid>
+                        <Grid sx={{ textAlign: 'end', mr:2 }}>
+                            <span>Don&apos;t have account ? <Link onClick={() => { history.push('/signup') }} variant="body2" sx={{ textDecoration: "none", cursor: 'pointer' }} >Sign-up</Link></span>
                         </Grid>
                     </form>
                 </Grid>
